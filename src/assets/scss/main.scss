@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Bentham&family=Raleway:wght@400;600;700;800&display=swap");
+
+@import "variables/color";
+@import "mixins/typography";
+@import "modules/submodules/body";
+@import "modules/submodules/header";
+@import "modules/submodules/wrapper";
+@import "modules/homepage";
+@import "modules/submodules/auth";
+@import "modules/product-list";
+@import "modules/submodules/comp";
+@import "modules/submodules/range";
+@import "modules/product-detail";
+@import "modules/submodules/footer";
