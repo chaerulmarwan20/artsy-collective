@@ -1844,10 +1844,12 @@ header .close img {
   font-size: 12px;
   line-height: 14px;
   color: #333;
+  margin: 0 4px;
 }
 
 .breadcrumbs ul li:first-child::before {
-  display: none;
+  content: "";
+  margin: 0;
 }
 
 .breadcrumbs ul li a {
@@ -2618,26 +2620,26 @@ header .close img {
   margin-right: 8px;
 }
 
-.help {
+.helps {
   border: 1px solid #e5e5e5;
   padding: 12px 16px 16px;
   text-align: center;
 }
 
-.help p {
+.helps p {
   font-size: 14px;
   line-height: 16px;
   color: #333;
   margin-bottom: 12px;
 }
 
-.help span {
+.helps span {
   font-size: 12px;
   line-height: 14px;
   color: #333;
 }
 
-.help a {
+.helps a {
   font-size: 12px;
   line-height: 14px;
   color: #333;
@@ -3026,7 +3028,7 @@ footer .title a {
   text-decoration: none;
 }
 
-footer .services {
+footer .service {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3250,6 +3252,7 @@ footer .country ul li {
 
 footer .country ul li:last-child::after {
   content: "";
+  margin: 0;
 }
 
 footer .country ul li::after {
@@ -3257,6 +3260,7 @@ footer .country ul li::after {
   font-size: 12px;
   line-height: 18px;
   color: #333;
+  margin: 0 4px;
 }
 
 footer .country ul li a {
@@ -3287,7 +3291,7 @@ footer .sponsor a img {
 }
 
 @media screen and (min-width: 768px) {
-  footer .services {
+  footer .service {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
         -ms-flex-direction: row;

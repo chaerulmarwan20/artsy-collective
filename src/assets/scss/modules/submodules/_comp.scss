@@ -9,9 +9,11 @@
         content: "|";
         font-weight: 500px;
         @include typography(12px, 14px);
+        margin: 0 4px;
       }
       &:first-child::before {
-        display: none;
+        content: "";
+        margin: 0;
       }
       a {
         @include typography(12px, 14px);

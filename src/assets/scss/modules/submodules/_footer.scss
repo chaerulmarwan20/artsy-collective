@@ -17,7 +17,7 @@ footer {
       text-decoration: none;
     }
   }
-  .services {
+  .service {
     display: flex;
     flex-direction: column;
     margin-top: 32px;
@@ -153,10 +153,12 @@ footer {
         display: inline-block;
         &:last-child::after {
           content: "";
+          margin: 0;
         }
         &::after {
           content: "-";
           @include typography(12px, 18px);
+          margin: 0 4px;
         }
         a {
           color: $textPrimaryColor;
@@ -181,7 +183,7 @@ footer {
 
 @media screen and (min-width: 768px) {
   footer {
-    .services {
+    .service {
       flex-direction: row;
     }
     .menu {
