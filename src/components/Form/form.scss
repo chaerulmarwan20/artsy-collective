@@ -1,0 +1,245 @@
+@import "../../assets/scss/variables/color";
+@import "../../assets/scss/mixins/typography";
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+  &.form-row {
+    width: calc(100% + 12px);
+    flex-direction: row;
+    .form-item {
+      width: 50%;
+      padding-right: 12px;
+    }
+  }
+  &.form-radio {
+    flex-direction: row;
+    .form-item-radio {
+      margin-right: 54px;
+      display: flex;
+      label {
+        margin-bottom: 0;
+        transform: translateY(0.5px);
+      }
+      input {
+        width: unset;
+        padding: 0;
+        &[type="radio"] {
+          position: absolute;
+          opacity: 0;
+          + .radio-label {
+            &::before {
+              content: "";
+              background-color: $bgColor;
+              border: 1.5px solid $borderPrimaryColor;
+              border-radius: 50%;
+              display: inline-block;
+              width: 17px;
+              height: 17px;
+              position: relative;
+              top: -1.5px;
+              margin-right: 10px;
+              vertical-align: top;
+              cursor: pointer;
+              text-align: center;
+              box-sizing: border-box;
+            }
+          }
+          &:checked {
+            + .radio-label {
+              &::before {
+                border: 5px solid $primaryColor;
+              }
+            }
+          }
+          &:focus {
+            + .radio-label {
+              &::before {
+                outline: none;
+                border-color: $primaryColor;
+              }
+            }
+          }
+          + .radio-label {
+            &:empty {
+              &::before {
+                margin-right: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  label {
+    display: inline-block;
+    @include typography(14px, 16px);
+    margin-bottom: 12px;
+  }
+  input {
+    width: 100%;
+    outline: none;
+    padding: 12px;
+    background-color: $bgColor;
+    border: 1px solid $borderPrimaryColor;
+    @include typography(14px, 16px);
+    transition: 0.5s;
+    &.error {
+      border: 1px solid $borderFourthlyColor;
+    }
+    &:focus {
+      border: 1px solid $primaryColor;
+    }
+    &::-webkit-input-placeholder {
+      @include typography(14px, 16px, $textTertiaryColor);
+    }
+    &::-moz-placeholder {
+      @include typography(14px, 16px, $textTertiaryColor);
+    }
+    &[type="date"] {
+      padding-left: 61px;
+      color: $textTertiaryColor;
+      &::-webkit-calendar-picker-indicator {
+        background: url(../../assets/img/calendar.png) no-repeat;
+        background-size: 16px;
+        background-position-y: center;
+        position: absolute;
+        left: -11px;
+        border-right: 1px solid $borderPrimaryColor;
+        padding-right: 12px;
+      }
+    }
+  }
+  small {
+    display: none;
+    margin-top: 12px;
+    @include typography(12px, 14px, $borderFourthlyColor);
+    white-space: nowrap;
+  }
+}
+.custom-check {
+  width: unset;
+  padding: 0;
+  &[type="checkbox"] {
+    display: none;
+    & + .label-check::before {
+      content: "";
+      background-color: $bgColor;
+      border-radius: 2px;
+      border: 1.5px solid $borderTertiaryColor;
+      display: inline-block;
+      vertical-align: middle;
+      width: 16px;
+      height: 16px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    & + .label-check.m-right::before {
+      margin-right: 15px;
+    }
+    &:checked + .label-check.t-shadow {
+      text-shadow: 0 0 0.65px $textPrimaryColor, 0 0 0.65px $textPrimaryColor;
+    }
+    &:checked + .label-check::before {
+      background-color: $primaryColor;
+      border: 1.5px solid transparent;
+    }
+    &:checked + .label-check::after {
+      content: "";
+      padding: 2px;
+      position: absolute;
+      display: block;
+      height: 4px;
+      border: solid $bgColor;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      top: 3px;
+      left: 5px;
+      border-radius: 1px;
+    }
+    &:checked + .label-check.transform-check::after {
+      top: 3.5px;
+    }
+  }
+}
+.label-check {
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  @include typography(14px, 16px);
+  transition: 0.5s;
+}
+.custom-color {
+  width: unset;
+  padding: 0;
+  &[type="radio"],
+  &[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    + .radio-label {
+      &::before {
+        content: "";
+        border-radius: 50%;
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        position: relative;
+        vertical-align: top;
+        cursor: pointer;
+        text-align: center;
+        box-sizing: border-box;
+      }
+    }
+    &:checked {
+      + .radio-label {
+        opacity: 1;
+        &::before {
+          border: 1px solid $primaryColor;
+        }
+      }
+    }
+    &:focus {
+      + .radio-label {
+        &::before {
+          outline: none;
+          border-color: $primaryColor;
+        }
+      }
+    }
+  }
+}
+.input-date {
+  position: relative;
+}
+.input-password {
+  position: relative;
+  width: 100%;
+  button {
+    position: absolute;
+    top: 13px;
+    right: 12px;
+    outline: none;
+    border: 0;
+    background-color: $bgColor;
+    cursor: pointer;
+    img {
+      width: 16px;
+    }
+  }
+}
+.custom-select {
+  appearance: none;
+  outline: none;
+  background-color: $bgColor;
+  border: 1px solid $borderPrimaryColor;
+  padding: 12px 15px;
+  cursor: pointer;
+  font-weight: 500;
+  @include typography(14px, 16px);
+  background-image: url(../../assets/img/chevron-down.png);
+  background-repeat: no-repeat;
+  background-size: 24px;
+  background-position-x: 94%;
+  background-position-y: center;
+}

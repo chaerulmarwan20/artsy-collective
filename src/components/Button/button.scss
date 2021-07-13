@@ -1,0 +1,32 @@
+@import "../../assets/scss/variables/color";
+@import "../../assets/scss/mixins/typography";
+
+.btn {
+  height: 40px;
+  outline: none;
+  cursor: pointer;
+  font-weight: 500;
+  @include typography(14px, 16px);
+  &-primary {
+    background-color: $primaryColor;
+    border: 1px solid transparent;
+    color: $bgColor;
+  }
+  &-outline {
+    background-color: $bgColor;
+    border: 1px solid $primaryColor;
+    color: $primaryColor;
+  }
+  &-close {
+    position: absolute;
+    top: -3px;
+    right: 0;
+    border: 0;
+    outline: none;
+    background-color: $bgColor;
+    cursor: pointer;
+    img {
+      width: 20px;
+    }
+  }
+}

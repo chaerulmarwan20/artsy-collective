@@ -1,0 +1,69 @@
+@import "../../assets/scss/variables/color";
+@import "../../assets/scss/mixins/typography";
+
+.carousel {
+  width: 100%;
+  position: relative;
+  margin: unset;
+  overflow-x: hidden;
+  &-item {
+    position: relative;
+  }
+}
+.arrow-left-slick,
+.arrow-right-slick {
+  position: absolute;
+  border: 0;
+  outline: none;
+  background-color: $bgModalColor;
+  border-radius: 50%;
+  top: 50%;
+  left: 16px;
+  cursor: pointer;
+}
+.arrow-left-slick {
+  z-index: 1;
+}
+.arrow-right-slick {
+  left: unset;
+  right: 16px;
+}
+.slick-nav {
+  display: flex;
+  justify-content: center;
+  width: calc(100% + 19px);
+}
+.slick-dots {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  bottom: unset;
+  width: unset;
+  padding: unset;
+  text-align: unset;
+  li {
+    position: relative;
+    display: block;
+    width: unset;
+    height: unset;
+    margin: unset;
+    margin-right: 19px;
+    padding: unset;
+    cursor: pointer;
+    &.slick-active .img-slick-nav {
+      border: 1px solid $primaryColor;
+    }
+  }
+}
+.slick-dotted.slick-slider {
+  margin-bottom: 12px;
+}
+.img-slick-nav {
+  cursor: pointer;
+  border: 1px solid $borderPrimaryColor;
+  img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+  }
+}

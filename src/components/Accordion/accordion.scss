@@ -1,0 +1,19 @@
+@import "../../assets/scss/variables/color";
+@import "../../assets/scss/mixins/typography";
+
+.accordion {
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  &-body {
+    max-height: 0;
+    overflow: hidden;
+    &.active {
+      max-height: 100%;
+      overflow: visible;
+    }
+  }
+}

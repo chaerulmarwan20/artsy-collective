@@ -1,0 +1,53 @@
+@import "../../assets/scss/variables/color";
+@import "../../assets/scss/mixins/typography";
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  width: calc(100% + 12px);
+  ul {
+    list-style: none;
+    display: flex;
+  }
+  li {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    background-color: $bgColor;
+    border: 1px solid $borderPrimaryColor;
+    cursor: pointer;
+    margin-right: 12px;
+    &.chevron {
+      display: flex;
+      border: 1px solid $primaryColor;
+    }
+    &.active {
+      background-color: $primaryColor;
+      border: 1px solid transparent;
+    }
+    a {
+      @include typography(16px, 19px, $textFifthlyColor);
+      text-decoration: none;
+      &.active {
+        color: $bgColor;
+      }
+      img {
+        width: 24px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .pagination {
+    padding-top: 16px;
+    li {
+      display: flex;
+      width: 44px;
+      height: 44px;
+    }
+  }
+}

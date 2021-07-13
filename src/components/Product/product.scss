@@ -1,0 +1,123 @@
+@import "../../assets/scss/variables/color";
+@import "../../assets/scss/mixins/typography";
+
+.product-collection {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 16px;
+  width: calc(100% + 8px);
+}
+.item-product-collection {
+  max-width: 50%;
+  padding-right: 8px;
+  padding-bottom: 28px;
+}
+.item-product-img {
+  display: block;
+  position: relative;
+  text-decoration: none;
+}
+.ribbon-product {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  background-image: url(../../assets/icon/discount.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 28px;
+  height: 42px;
+  @include typography(10px, 15px, $bgColor);
+  padding-top: 3px;
+  text-align: center;
+}
+.label-product {
+  position: absolute;
+  bottom: 12px;
+  left: 8px;
+  width: 68px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2px;
+  background-color: rgba(130, 130, 130, 0.5);
+  border-radius: 44px;
+  @include typography(10px, 12px, $bgColor);
+  text-align: center;
+}
+.item-product-detail {
+  padding-top: 12px;
+  padding-left: 10px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  a {
+    @include typography(12px, 14px);
+    text-decoration: none;
+  }
+}
+.item-price {
+  display: flex;
+  flex-direction: column;
+  padding-top: 8px;
+  p {
+    @include typography(14px, 16px);
+  }
+  span {
+    @include typography(12px, 14px, $textTertiaryColor);
+    text-decoration-line: line-through;
+    margin-top: 2px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .item-product-collection {
+    max-width: 33.3%;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .product-collection {
+    padding-top: 24px;
+    width: calc(100% + 16px);
+  }
+  .item-product-collection {
+    padding-right: 16px;
+    padding-bottom: 40px;
+  }
+  .ribbon-product {
+    width: 43px;
+    height: 65px;
+    padding-top: 7px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .label-product {
+    width: 97px;
+    height: 24px;
+    padding-top: 0;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .item-product-detail {
+    padding-top: 16px;
+    a {
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }
+  .item-price {
+    flex-direction: row;
+    align-items: center;
+    p {
+      font-size: 16px;
+      line-height: 19px;
+    }
+    span {
+      font-size: 14px;
+      line-height: 16px;
+      margin-left: 8px;
+      margin-top: 0;
+    }
+  }
+}

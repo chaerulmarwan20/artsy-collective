@@ -1,0 +1,106 @@
+@import "../../assets/scss/variables/color";
+@import "../../assets/scss/mixins/typography";
+
+.homepage-wrapper {
+  display: none;
+}
+.auth {
+  padding-top: 18px;
+  padding-bottom: 24px;
+}
+.login,
+.register {
+  display: none;
+  &.active {
+    display: block;
+  }
+}
+.login-header,
+.register-header {
+  position: relative;
+  text-align: center;
+  margin-bottom: 11px;
+  p {
+    @include typography(16px, 19px);
+  }
+}
+.login-body,
+.register-body {
+  p {
+    @include typography(14px, 16px, $textFourthlyColor);
+    text-align: center;
+  }
+}
+.form-wrapper {
+  margin-top: 24px;
+  a {
+    display: inline-block;
+    @include typography(14px, 16px, $primaryColor);
+    margin-top: 12px;
+  }
+}
+.form-wrapper.form-register {
+  margin-top: 44px;
+}
+.form-check {
+  display: flex;
+  &:last-child {
+    label {
+      margin-bottom: 0;
+    }
+  }
+  a {
+    display: inline;
+    @include typography(14px, 16px);
+  }
+}
+.label-check.label-check-auth {
+  width: 16px;
+  height: 16px;
+  margin-right: 15px;
+}
+.arrival-label,
+.terms-label {
+  transform: translateY(1px);
+}
+.form-footer-login,
+.form-footer-register {
+  margin-top: 268px;
+  .btn-auth {
+    padding: 12px;
+    width: 100%;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+  p {
+    @include typography(14px, 16px, $textFourthlyColor);
+    text-align: center;
+    a {
+      @include typography(14px, 16px, $primaryColor);
+    }
+  }
+}
+.form-footer-register {
+  margin-top: 40px;
+}
+.modal-auth {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .homepage-wrapper {
+    display: block;
+  }
+  .auth {
+    display: flex;
+  }
+  .content-auth {
+    width: 386px;
+    margin: auto;
+    padding: 24px;
+    background-color: $bgColor;
+  }
+  .form-footer-login {
+    margin-top: 48px;
+  }
+}
