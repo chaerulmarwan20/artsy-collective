@@ -71,6 +71,10 @@
     width: 100%;
     margin-bottom: 16px;
     opacity: 0.6;
+    transition: 0.5s;
+    &:hover {
+      opacity: 1;
+    }
   }
   p {
     @include typography(14px, 16px, $textFourthlyColor);

@@ -8,7 +8,7 @@ import Carousel from "../../components/Carousel/Carousel";
 import Accordion from "../../components/Accordion/Accordion";
 import Button from "../../components/Button/Button";
 import InputColor from "../../components/Form/InputColor";
-import LinkOutline from "../../components/LinkOutline";
+import ButtonLink from "../../components/Button/ButtonLink";
 import ButtonClose from "../../components/Button/ButtonClose";
 
 import Rupiah from "../../helpers/Rupiah";
@@ -275,7 +275,7 @@ export default function ProductDetail() {
               >
                 Add To Cart
               </Button>
-              <LinkOutline
+              <ButtonLink
                 href="#"
                 className="btn-order hover-opacity-secondary"
                 title="Order Now"

@@ -5,7 +5,7 @@ import "./header.scss";
 
 import ListMenu from "../ListMenu";
 import ButtonClose from "../Button/ButtonClose";
-import Card from "../Product/CardProductSm";
+import Card from "../Product/CardProductHome";
 
 import HamburgerMenu from "../../assets/icon/menu.svg";
 import User from "../../assets/icon/user.svg";
@@ -241,6 +241,7 @@ export default function Header() {
                 classTitle="title-product"
                 classTitleHref="hover-color-primary"
                 key={index}
+                isSmall
               />
             );
           })}

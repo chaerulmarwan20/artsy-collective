@@ -5,13 +5,17 @@ import "./button.scss";
 
 export default function Button(props) {
   const className = ["btn"];
-  className.push(props.className);
-
   if (props.isPrimary) className.push("btn-primary");
   if (props.isOutline) className.push("btn-outline");
+  if (props.isArrow) className.shift();
+  className.push(props.className);
 
   return (
-    <button type={props.type} className={className.join(" ")}>
+    <button
+      type={props.type}
+      className={className.join(" ")}
+      onClick={props.onClick}
+    >
       {props.children}
     </button>
   );

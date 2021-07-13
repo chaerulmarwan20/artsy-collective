@@ -10,7 +10,7 @@ import InputRange from "../../components/Form/InputRange";
 import InputColor from "../../components/Form/InputColor";
 import Button from "../../components/Button/Button";
 import Select from "../../components/Form/Select";
-import Card from "../../components/Product/CardProductMd";
+import Card from "../../components/Product/CardProductList";
 import Pagination from "../../components/Pagination/Pagination";
 
 import Ring from "../../assets/img/ring.png";

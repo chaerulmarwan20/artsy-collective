@@ -4,9 +4,8 @@ import "./homepage.scss";
 
 import Auth from "../Auth/Auth";
 
-import LinkOutline from "../../components/LinkOutline";
-import CardSm from "../../components/Product/CardProductSm";
-import CardLg from "../../components/Product/CardProductLg";
+import ButtonLink from "../../components/Button/ButtonLink";
+import Card from "../../components/Product/CardProductHome";
 
 import Banner from "../../assets/img/banner-homepage.jpg";
 import Item1 from "../../assets/img/item-1.jpg";
@@ -72,7 +71,7 @@ export default function Homepage() {
               geometric curves lend themselves to an endless variety of styles,
               from the most naturalistic to the most abstract.
             </p>
-            <LinkOutline
+            <ButtonLink
               href="#"
               title="See Camelia Collection"
               className="btn-see hover-opacity-primary"
@@ -91,7 +90,7 @@ export default function Homepage() {
               Leaf Pendant Collections
             </h2>
             <p>Style your modest wear with our understated picks</p>
-            <LinkOutline
+            <ButtonLink
               href="#"
               title="Shop Now"
               className="btn-shop hover-opacity-primary"
@@ -102,7 +101,7 @@ export default function Homepage() {
           <div className="product-leaf">
             {leafProduct.map((item, index) => {
               return (
-                <CardSm
+                <Card
                   classProduct="item-leaf"
                   href={item.href}
                   title={item.title}
@@ -111,6 +110,7 @@ export default function Homepage() {
                   classTitle="title-leaf"
                   classTitleHref="font-medium hover-color-primary"
                   key={index}
+                  isSmall
                 />
               );
             })}
@@ -123,7 +123,7 @@ export default function Homepage() {
           <div className="discover-product">
             {discoverProduct.map((item, index) => {
               return (
-                <CardLg
+                <Card
                   classProduct="discover-item"
                   classImg="img-discover"
                   img={item.img}

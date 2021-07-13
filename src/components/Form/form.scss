@@ -243,3 +243,31 @@
   background-position-x: 94%;
   background-position-y: center;
 }
+.range-price {
+  margin-top: 16px;
+  padding-left: 4px;
+  padding-right: 7px;
+  padding-bottom: 15px;
+  p.title-range {
+    @include typography(12px, 14px);
+    text-align: center;
+    margin-top: 18px;
+  }
+}
+.total-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span {
+    @include typography(12px, 14px);
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .range-price {
+    margin-top: 8px;
+    p.title-range {
+      margin-top: 15px;
+    }
+  }
+}

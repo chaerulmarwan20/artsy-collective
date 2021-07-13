@@ -161,11 +161,7 @@ export default function Auth() {
                 Forgot Password
               </Link>
               <div className="form-footer-login">
-                <Button
-                  type="submit"
-                  className="btn-auth hover-opacity-tertiary"
-                  isPrimary
-                >
+                <Button type="submit" className="btn-auth" isPrimary>
                   Login
                 </Button>
                 <p>
@@ -236,11 +232,7 @@ export default function Auth() {
                 isAuth
               />
               <div className="form-footer-register">
-                <Button
-                  type="submit"
-                  className="btn-auth hover-opacity-tertiary"
-                  isPrimary
-                >
+                <Button type="submit" className="btn-auth" isPrimary>
                   Create Account
                 </Button>
                 <p>

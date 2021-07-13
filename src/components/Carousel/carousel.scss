@@ -4,11 +4,7 @@
 .carousel {
   width: 100%;
   position: relative;
-  margin: unset;
   overflow-x: hidden;
-  &-item {
-    position: relative;
-  }
 }
 .arrow-left-slick,
 .arrow-right-slick {
@@ -17,9 +13,11 @@
   outline: none;
   background-color: $bgModalColor;
   border-radius: 50%;
-  top: 50%;
+  top: calc(50% - 63px);
   left: 16px;
   cursor: pointer;
+  width: 32px;
+  height: 32px;
 }
 .arrow-left-slick {
   z-index: 1;
@@ -28,22 +26,14 @@
   left: unset;
   right: 16px;
 }
-.slick-nav {
-  display: flex;
-  justify-content: center;
-  width: calc(100% + 19px);
-}
 .slick-dots {
-  position: relative;
-  display: flex;
+  display: flex !important;
   justify-content: center;
+  position: relative;
   bottom: unset;
-  width: unset;
-  padding: unset;
-  text-align: unset;
+  margin-top: 12px;
+  width: calc(100% + 19px);
   li {
-    position: relative;
-    display: block;
     width: unset;
     height: unset;
     margin: unset;
@@ -55,15 +45,21 @@
     }
   }
 }
-.slick-dotted.slick-slider {
-  margin-bottom: 12px;
-}
 .img-slick-nav {
-  cursor: pointer;
   border: 1px solid $borderPrimaryColor;
   img {
     width: 64px;
     height: 64px;
     object-fit: contain;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .slick-dots {
+    margin-top: 24px;
+    width: calc(100% + 20px);
+    li {
+      margin-right: 20px;
+    }
   }
 }

@@ -1,4 +1,4 @@
-const convert = (params) => {
+const convert = (params, isRange) => {
   let number_string = params
       .toString()
       .replace(/[^,\d]/g, "")
@@ -14,7 +14,7 @@ const convert = (params) => {
   }
 
   rupiah = split[1] !== undefined ? rupiah + "," + split[1] : rupiah;
-  return `Rp. ${rupiah}`;
+  return isRange ? `${rupiah}` : `Rp. ${rupiah}`;
 };
 
 export default convert;

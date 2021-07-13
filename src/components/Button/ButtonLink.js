@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
 
-export default function LinkOutline(props) {
+export default function ButtonLink(props) {
   const className = ["btn", "btn-outline"];
   className.push(props.className);
   return (
@@ -12,7 +12,7 @@ export default function LinkOutline(props) {
   );
 }
 
-LinkOutline.propTypes = {
+ButtonLink.propTypes = {
   href: propTypes.string,
   className: propTypes.string,
   title: propTypes.string,

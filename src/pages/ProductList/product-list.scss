@@ -87,55 +87,6 @@
     transform: translateY(1.5px);
   }
 }
-.total-price {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  span {
-    @include typography(12px, 14px);
-  }
-}
-.range-price {
-  margin-top: 22px;
-  padding-left: 7px;
-  padding-right: 7px;
-  padding-bottom: 15px;
-  p {
-    @include typography(12px, 14px);
-    text-align: center;
-    margin-top: 18px;
-  }
-}
-.slider {
-  appearance: none;
-  width: 100%;
-  height: 4px;
-  border-radius: 5px;
-  background-color: $primaryColor;
-  outline: none;
-  opacity: 1;
-  transition: 0.5s;
-  &:hover {
-    opacity: 0.6;
-  }
-  &::-webkit-slider-thumb {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: $primaryColor;
-    cursor: pointer;
-  }
-  &::-moz-range-thumb {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: $primaryColor;
-    cursor: pointer;
-    border: 0;
-  }
-}
 .color-item {
   margin-right: 20px;
   margin-bottom: 24px;
@@ -424,12 +375,6 @@
   }
   .accordion-check {
     padding-bottom: 17px;
-  }
-  .range-price {
-    margin-top: 14px;
-    p {
-      margin-top: 15px;
-    }
   }
   .color-item {
     margin-bottom: 12px;

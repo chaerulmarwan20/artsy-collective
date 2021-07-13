@@ -6,7 +6,7 @@ import "./product.scss";
 
 import Rupiah from "../../helpers/Rupiah";
 
-export default function CardProductMd(props) {
+export default function CardProductList(props) {
   return (
     <div className="item-product-collection">
       <Link
@@ -41,7 +41,7 @@ export default function CardProductMd(props) {
   );
 }
 
-CardProductMd.propTypes = {
+CardProductList.propTypes = {
   href: propTypes.string,
   title: propTypes.string,
   img: propTypes.string,
