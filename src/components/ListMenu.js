@@ -22,6 +22,7 @@ export default function ListMenu(props) {
               to={item.href}
               className={classItem.join(" ")}
               title={item.title}
+              onMouseOver={(e) => props.isNavbar && props.onMouseOver(e)}
             >
               {item.title}
             </Link>
@@ -35,5 +36,7 @@ export default function ListMenu(props) {
 ListMenu.propTypes = {
   className: propTypes.string,
   list: propTypes.array,
+  onMouseOver: propTypes.func,
+  isNavbar: propTypes.bool,
   isFooter: propTypes.bool,
 };

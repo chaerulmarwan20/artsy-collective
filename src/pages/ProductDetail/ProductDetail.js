@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./product-detail.scss";
@@ -7,9 +7,11 @@ import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import Carousel from "../../components/Carousel/Carousel";
 import Accordion from "../../components/Accordion/Accordion";
 import Button from "../../components/Button/Button";
+import Input from "../../components/Form/Input";
 import InputColor from "../../components/Form/InputColor";
 import ButtonLink from "../../components/Button/ButtonLink";
 import ButtonClose from "../../components/Button/ButtonClose";
+import Modal from "../../components/Modal/Modal";
 
 import Rupiah from "../../helpers/Rupiah";
 
@@ -24,6 +26,9 @@ import Info from "../../assets/icon/info.svg";
 import ModalProduct from "../../assets/img/modal-product.jpg";
 
 export default function ProductDetail() {
+  const [qty, setQty] = useState(1);
+  const [color, setColor] = useState("Gold");
+
   const listBreadcrumb = [
     {
       href: "#",
@@ -70,60 +75,51 @@ export default function ProductDetail() {
     },
   ];
 
-  useEffect(() => {
-    document.title = "Artsy Collective | Product Detail";
+  const handleQty = (e) => {
+    if (e.target.value !== "") {
+      e.target.validity.valid ? setQty(e.target.value) : setQty(qty);
+    }
+  };
 
-    const accordionHeading = document.querySelectorAll(".accordion-header");
-    const btnPlus = document.querySelector(".btn-plus");
-    const imgPlus = document.querySelector(".img-plus");
-    const btnMinus = document.querySelector(".btn-minus");
-    const imgMinus = document.querySelector(".img-minus");
-    const qtyValue = document.querySelector(".qty-value");
-    const radioColor = document.querySelectorAll(".radio-color-item label");
-    const colorValue = document.querySelector(".color-value");
+  const handleCount = (type) => {
+    if (type === "plus") {
+      setQty(Number(qty) + 1);
+    } else {
+      qty > 1 && setQty(Number(qty) - 1);
+    }
+  };
+
+  const handleCart = (type) => {
     const cart = document.querySelector(".cart");
-    const btnCart = document.querySelector(".btn-cart");
-    const closeCart = document.querySelector(".header-cart button");
 
-    let qty = 1;
-
-    accordionHeading.forEach((item) => {
-      item.addEventListener("click", function () {
-        const sibling = this.nextElementSibling;
-        const children = this.children[0];
-        this.classList.toggle("active");
-        sibling.classList.toggle("active");
-        children.classList.toggle("active");
-      });
-    });
-
-    window.addEventListener("click", (e) => {
-      if (e.target === btnPlus || e.target === imgPlus) {
-        qty++;
-        qtyValue.value = qty;
-      } else if (e.target === btnMinus || e.target === imgMinus) {
-        if (qty !== 1) {
-          qty--;
-          qtyValue.value = qty;
-        }
-      }
-    });
-
-    radioColor.forEach((item) => {
-      item.addEventListener("click", function () {
-        colorValue.textContent = this.dataset.color;
-      });
-    });
-
-    btnCart.addEventListener("click", () => {
-      cart.style.display = "flex";
-      document.body.classList.add("overflow-cart");
-    });
-
-    closeCart.addEventListener("click", () => {
+    if (type === "close") {
       cart.style.display = "none";
       document.body.classList.remove("overflow-cart");
-    });
+    } else {
+      cart.style.display = "flex";
+      document.body.classList.add("overflow-cart");
+    }
+  };
+
+  const handleAccordions = (e) => {
+    let target, children;
+
+    if (!e.target.classList.contains("accordion-header")) {
+      target = e.target.parentElement.nextElementSibling;
+      children = target.parentElement.children[0];
+      e.target.parentElement.classList.toggle("active");
+    } else {
+      target = e.target.nextElementSibling;
+      children = e.target.children[0];
+      e.target.classList.toggle("active");
+    }
+
+    target.classList.toggle("active");
+    children.classList.toggle("active");
+  };
+
+  const handleWindow = () => {
+    const cart = document.querySelector(".cart");
 
     window.addEventListener("click", (e) => {
       if (e.target === cart) {
@@ -131,6 +127,11 @@ export default function ProductDetail() {
         cart.style.display = "none";
       }
     });
+  };
+
+  useEffect(() => {
+    document.title = "Artsy Collective | Product Detail";
+    handleWindow();
   }, []);
 
   return (
@@ -171,6 +172,7 @@ export default function ProductDetail() {
               classHeader="accordion-header-product-detail
                 hover-opacity-primary"
               title="Description"
+              onClick={handleAccordions}
             >
               <p>
                 Elevate your everyday look with these threader earrings designed
@@ -186,6 +188,7 @@ export default function ProductDetail() {
               classHeader="accordion-header-product-detail
                 hover-opacity-primary"
               title="Material"
+              onClick={handleAccordions}
             >
               <ul>
                 <li className="font-medium">Fabric</li>
@@ -203,6 +206,7 @@ export default function ProductDetail() {
               classHeader="accordion-header-product-detail
                 hover-opacity-primary"
               title="Shipping & Returns"
+              onClick={handleAccordions}
             >
               <ul>
                 <li className="font-medium">Standard Delivery</li>
@@ -234,18 +238,24 @@ export default function ProductDetail() {
                 <Button
                   type="button"
                   className="btn-minus hover-opacity-primary"
+                  onClick={() => handleCount("minus")}
                 >
                   <img src={Minus} alt="Minus" className="img-minus" />
                 </Button>
-                <input
+                <Input
                   type="text"
-                  className="font-medium qty-value"
-                  defaultValue={1}
-                  maxLength="4"
+                  classInput="font-medium qty-value"
+                  name="qty"
+                  value={qty}
+                  max={4}
+                  onChange={handleQty}
+                  pattern="[0-9]*"
+                  isSingle
                 />
                 <Button
                   type="button"
                   className="btn-plus hover-opacity-primary"
+                  onClick={() => handleCount("plus")}
                 >
                   <img src={Plus} alt="Plus" className="img-plus" />
                 </Button>
@@ -253,13 +263,15 @@ export default function ProductDetail() {
             </div>
             <div className="color">
               <p className="font-medium">
-                Pick Your Color: <span className="color-value">Gold</span>
+                Pick Your Color: <span className="color-value">{color}</span>
               </p>
               <div className="radio-wrapper">
                 <InputColor
                   classColor="radio-color-item"
                   type="radio"
                   list={listColor}
+                  onChange={(color) => setColor(color)}
+                  isRadio
                 />
               </div>
             </div>
@@ -271,6 +283,7 @@ export default function ProductDetail() {
               <Button
                 type="button"
                 className="btn-cart hover-opacity-secondary"
+                onClick={() => handleCart("show")}
                 isPrimary
               >
                 Add To Cart
@@ -298,11 +311,14 @@ export default function ProductDetail() {
           </div>
         </section>
       </div>
-      <div className="wrapper modal cart">
+      <Modal className="wrapper cart">
         <div className="content-cart">
           <div className="header-cart">
             <p className="font-semi-bold">Item Added to Cart</p>
-            <ButtonClose className="btn-close hover-opacity-primary"></ButtonClose>
+            <ButtonClose
+              className="btn-close hover-opacity-primary"
+              onClick={() => handleCart("close")}
+            ></ButtonClose>
           </div>
           <div className="body-cart">
             <div className="img-cart">
@@ -324,7 +340,7 @@ export default function ProductDetail() {
             </Button>
           </div>
         </div>
-      </div>
+      </Modal>
     </>
   );
 }

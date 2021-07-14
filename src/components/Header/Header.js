@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import "./header.scss";
 
 import ListMenu from "../ListMenu";
+import Button from "../Button/Button";
 import ButtonClose from "../Button/ButtonClose";
 import Card from "../Product/CardProductHome";
 
@@ -40,6 +41,10 @@ export default function Header() {
     {
       href: "#",
       title: "Care & Services",
+    },
+    {
+      href: "/todo",
+      title: "To Do",
     },
   ];
 
@@ -148,53 +153,53 @@ export default function Header() {
     },
   ];
 
-  useEffect(() => {
+  const handleHeader = () => {
     const heading = document.querySelector("header");
-    const links = document.querySelectorAll(".navbar-menu a");
     const collesctionsMenu = document.querySelector(".collections-menu");
+    heading.classList.remove("active");
+    collesctionsMenu.classList.remove("active");
+  };
+
+  const handleLinks = (e) => {
+    const collectionsMenu = document.querySelector(".collections-menu");
+    if (e.target.classList.contains("collections")) {
+      collectionsMenu.classList.add("active");
+    } else {
+      collectionsMenu.classList.remove("active");
+    }
+  };
+
+  const handleMenuMobile = (type) => {
     const hamburgerMenu = document.querySelector(".hamburger-menu");
     const navbarExpand = document.querySelector(".navbar-expand");
     const icon = document.querySelector(".icon");
     const close = document.querySelector(".close");
 
-    heading.addEventListener("mouseleave", function () {
-      this.classList.remove("active");
-      collesctionsMenu.classList.remove("active");
-    });
-
-    links.forEach((link) => {
-      link.addEventListener("mouseover", () => {
-        if (link.classList.contains("collections")) {
-          collesctionsMenu.classList.add("active");
-        } else {
-          collesctionsMenu.classList.remove("active");
-        }
-      });
-    });
-
-    hamburgerMenu.addEventListener("click", function () {
-      this.classList.add("scale");
+    if (type === "hamburger") {
+      hamburgerMenu.classList.add("scale");
       navbarExpand.classList.add("slide");
       icon.classList.add("scale");
       close.classList.add("scale");
       document.body.classList.add("overflow-navbar");
-    });
-
-    close.addEventListener("click", function () {
-      this.classList.remove("scale");
+    } else {
+      close.classList.remove("scale");
       hamburgerMenu.classList.remove("scale");
       navbarExpand.classList.remove("slide");
       icon.classList.remove("scale");
       document.body.classList.remove("overflow-navbar");
-    });
-  }, []);
+    }
+  };
 
   return (
-    <header className="wrapper">
+    <header className="wrapper" onMouseLeave={handleHeader}>
       <nav className="navbar">
-        <button type="button" className="hamburger-menu hover-opacity-primary">
+        <Button
+          type="button"
+          className="hamburger-menu hover-opacity-primary"
+          onClick={() => handleMenuMobile("hamburger")}
+        >
           <img src={HamburgerMenu} className="img-block" alt="Hamburger Menu" />
-        </button>
+        </Button>
         <div className="logo">
           <Link
             to="#"
@@ -204,7 +209,12 @@ export default function Header() {
             Artsy Collective
           </Link>
         </div>
-        <ListMenu classMenu="navbar-menu" list={navbarMenu} />
+        <ListMenu
+          classMenu="navbar-menu"
+          list={navbarMenu}
+          onMouseOver={handleLinks}
+          isNavbar
+        />
         <div className="icon">
           <Link to="#" className="hover-opacity-primary" title="Your Account">
             <img src={User} className="img-block" alt="User" />
@@ -218,7 +228,10 @@ export default function Header() {
             <div className="count">1</div>
           </Link>
         </div>
-        <ButtonClose className="close hover-opacity-primary" />
+        <ButtonClose
+          className="close hover-opacity-primary"
+          onClick={() => handleMenuMobile("close")}
+        />
       </nav>
       <div className="collections-menu">
         <div className="categories">

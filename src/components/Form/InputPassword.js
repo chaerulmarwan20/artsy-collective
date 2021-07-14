@@ -18,7 +18,11 @@ export default function InputPassword(props) {
           placeholder={props.placeholder}
           className={props.classInput}
         />
-        <button type="button" className={props.classButton}>
+        <button
+          type="button"
+          className={props.classButton}
+          onClick={props.onClick}
+        >
           <img src={EyeOff} alt="Eye Off" />
         </button>
       </div>
@@ -29,6 +33,7 @@ export default function InputPassword(props) {
 
 InputPassword.propTypes = {
   onChange: propTypes.func,
+  onClick: propTypes.func,
   classForm: propTypes.string,
   classInput: propTypes.string,
   classButton: propTypes.string,

@@ -7,7 +7,7 @@ export default function Button(props) {
   const className = ["btn"];
   if (props.isPrimary) className.push("btn-primary");
   if (props.isOutline) className.push("btn-outline");
-  if (props.isArrow) className.shift();
+  if (props.isSmall) className.shift();
   className.push(props.className);
 
   return (
@@ -27,4 +27,5 @@ Button.propTypes = {
   type: propTypes.string,
   isPrimary: propTypes.bool,
   isOutline: propTypes.bool,
+  isSmall: propTypes.bool,
 };

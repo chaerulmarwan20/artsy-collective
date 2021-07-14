@@ -15,7 +15,11 @@ export default function Accordion(props) {
 
   return (
     <div className={classWrapper.join(" ")}>
-      <div className={classHeader.join(" ")} role="button">
+      <div
+        className={classHeader.join(" ")}
+        role="button"
+        onClick={(e) => props.onClick(e)}
+      >
         <p className={props.classParagraph}>{props.title}</p>
         <img src={ChevronDown} alt="Chevron Down" className="img-block" />
       </div>
@@ -25,6 +29,7 @@ export default function Accordion(props) {
 }
 
 Accordion.propTypes = {
+  onClick: propTypes.func,
   classWrapper: propTypes.string,
   classHeader: propTypes.string,
   classBody: propTypes.string,

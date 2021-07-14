@@ -7,6 +7,22 @@ export default function Input(props) {
   const className = ["form-group"];
   className.push(props.classForm);
 
+  if (props.isSingle) {
+    return (
+      <input
+        type={props.type}
+        className={props.classInput}
+        name={props.name}
+        id={props.name}
+        value={props.value}
+        maxLength={props.max}
+        onChange={props.onChange}
+        pattern={props.pattern}
+        placeholder={props.placeholder}
+      />
+    );
+  }
+
   return (
     <div className={className.join(" ")}>
       {props.isRow ? (
@@ -51,5 +67,9 @@ Input.propTypes = {
   placeholder: propTypes.string,
   small: propTypes.string,
   list: propTypes.array,
+  max: propTypes.number,
+  value: propTypes.number,
+  pattern: propTypes.string,
   isRow: propTypes.bool,
+  isSingle: propTypes.bool,
 };

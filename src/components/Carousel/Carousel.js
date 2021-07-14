@@ -19,7 +19,7 @@ const PrevArrow = (props) => {
       type="button"
       className="arrow-left-slick hover-opacity-secondary"
       onClick={onClick}
-      isArrow
+      isSmall
     >
       <img src={ArrowLeft} className="img-block" alt="Arrow Left" />
     </Button>
@@ -33,7 +33,7 @@ const NextArrow = (props) => {
       type="button"
       className="arrow-right-slick hover-opacity-secondary"
       onClick={onClick}
-      isArrow
+      isSmall
     >
       <img src={ArrowRight} className="img-block" alt="Arrow Right" />
     </Button>

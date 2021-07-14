@@ -11,11 +11,11 @@ export default function InputColor(props) {
           name={item.name}
           id={item.id}
           defaultChecked={item.isChecked && true}
+          onChange={() => props.isRadio && props.onChange(item.id)}
         />
         <label
           htmlFor={item.id}
           className="radio-label hover-opacity-primary"
-          data-color={item.id}
         ></label>
       </div>
     );
@@ -23,7 +23,9 @@ export default function InputColor(props) {
 }
 
 InputColor.propTypes = {
+  onChange: propTypes.func,
   list: propTypes.array,
   classColor: propTypes.string,
   type: propTypes.string,
+  isRadio: propTypes.bool,
 };

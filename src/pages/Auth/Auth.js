@@ -10,6 +10,7 @@ import InputRadio from "../../components/Form/InputRadio";
 import InputCheckbox from "../../components/Form/InputCheckbox";
 import Button from "../../components/Button/Button";
 import ButtonClose from "../../components/Button/ButtonClose";
+import Modal from "../../components/Modal/Modal";
 
 export default function Auth() {
   const listRadio = [
@@ -56,36 +57,54 @@ export default function Auth() {
     },
   ];
 
-  useEffect(() => {
-    const header = document.querySelector("header");
-    const footer = document.querySelector("footer");
-    const homepage = document.querySelector(".homepage");
-    const auth = document.querySelector(".auth");
-    const login = document.querySelector(".login");
-    const register = document.querySelector(".register");
-    const btnCloseLogin = document.getElementById("btnCloseLogin");
-    const imgCloseLogin = document.getElementById("imgCloseLogin");
-    const btnCloseRegister = document.getElementById("btnCloseRegister");
-    const imgCloseRegister = document.getElementById("imgCloseRegister");
-    const btnEyeLogin = document.querySelector(".btn-eye-login");
-    const btnEyeRegisterOne = document.querySelector(".btn-eye-register-one");
-    const btnEyeRegisterTwo = document.querySelector(".btn-eye-register-two");
+  const handleTypePassword = (type) => {
     const passLogin = document.querySelector(".password-login");
     const passRegister = document.querySelector(".password-register");
     const passConfirmRegister = document.querySelector(
       ".confirm-password-register"
     );
-    const linkSignUp = document.querySelector(".form-footer-login a");
-    const linkSignIn = document.querySelector(".form-footer-register a");
 
-    document.body.classList.add("overflow-modal");
+    if (type === "loginPass") {
+      passLogin.type === "password"
+        ? (passLogin.type = "text")
+        : (passLogin.type = "password");
+    } else if (type === "registerPass") {
+      passRegister.type === "password"
+        ? (passRegister.type = "text")
+        : (passRegister.type = "password");
+    } else {
+      passConfirmRegister.type === "password"
+        ? (passConfirmRegister.type = "text")
+        : (passConfirmRegister.type = "password");
+    }
+  };
+
+  const handleAuth = (type) => {
+    const login = document.querySelector(".login");
+    const register = document.querySelector(".register");
+
+    if (type === "login") {
+      register.classList.remove("active");
+      login.classList.add("active");
+    } else {
+      login.classList.remove("active");
+      register.classList.add("active");
+    }
+  };
+
+  const handleWindow = () => {
+    const header = document.querySelector("header");
+    const footer = document.querySelector("footer");
+    const homepage = document.querySelector(".homepage");
+    const auth = document.querySelector(".auth");
+
+    const btnCloseLogin = document.getElementById("btnCloseLogin");
+    const btnCloseRegister = document.getElementById("btnCloseRegister");
 
     window.addEventListener("click", (e) => {
       if (
         e.target === btnCloseLogin ||
-        e.target === imgCloseLogin ||
         e.target === btnCloseRegister ||
-        e.target === imgCloseRegister ||
         e.target === auth
       ) {
         auth.style.display = "none";
@@ -95,46 +114,23 @@ export default function Auth() {
         document.body.classList.remove("overflow-modal");
       }
     });
+  };
 
-    btnEyeLogin.addEventListener("click", () => {
-      passLogin.type === "password"
-        ? (passLogin.type = "text")
-        : (passLogin.type = "password");
-    });
+  useEffect(() => {
+    document.body.classList.add("overflow-modal");
 
-    btnEyeRegisterOne.addEventListener("click", () => {
-      passRegister.type === "password"
-        ? (passRegister.type = "text")
-        : (passRegister.type = "password");
-    });
-
-    btnEyeRegisterTwo.addEventListener("click", () => {
-      passConfirmRegister.type === "password"
-        ? (passConfirmRegister.type = "text")
-        : (passConfirmRegister.type = "password");
-    });
-
-    linkSignUp.addEventListener("click", () => {
-      login.classList.remove("active");
-      register.classList.add("active");
-    });
-
-    linkSignIn.addEventListener("click", () => {
-      register.classList.remove("active");
-      login.classList.add("active");
-    });
+    handleWindow();
   }, []);
 
   return (
-    <div className="modal auth">
+    <Modal className="auth">
       <div className="wrapper content-auth">
         <section className="login active">
           <div className="login-header">
             <p className="font-semi-bold">Welcome Back</p>
             <ButtonClose
               className="btn-close hover-opacity-primary"
-              idBtn="btnCloseLogin"
-              idImg="imgCloseLogin"
+              idImg="btnCloseLogin"
             />
           </div>
           <div className="login-body">
@@ -152,6 +148,7 @@ export default function Auth() {
                 placeholder="ex: *****"
                 classInput="password-login"
                 classButton="btn-eye-login hover-opacity-primary"
+                onClick={() => handleTypePassword("loginPass")}
               />
               <Link
                 to="#"
@@ -170,6 +167,7 @@ export default function Auth() {
                     to="#"
                     className="font-semi-bold hover-color-tertiary"
                     title="Sign Up"
+                    onClick={() => handleAuth("register")}
                   >
                     Sign Up
                   </Link>
@@ -183,8 +181,7 @@ export default function Auth() {
             <p className="font-semi-bold">Create an Account</p>
             <ButtonClose
               className="btn-close hover-opacity-primary"
-              idBtn="btnCloseRegister"
-              idImg="imgCloseRegister"
+              idImg="btnCloseRegister"
             />
           </div>
           <div className="register-body">
@@ -217,6 +214,7 @@ export default function Auth() {
                 placeholder="ex: *****"
                 classInput="password-register"
                 classButton="btn-eye-register-one hover-opacity-primary"
+                onClick={() => handleTypePassword("registerPass")}
               />
               <InputPassword
                 name="confirmPassword"
@@ -224,6 +222,7 @@ export default function Auth() {
                 placeholder="ex: *****"
                 classInput="confirm-password-register"
                 classButton="btn-eye-register-two hover-opacity-primary"
+                onClick={() => handleTypePassword("registerConfirm")}
               />
               <InputCheckbox
                 list={listCheckbox}
@@ -241,6 +240,7 @@ export default function Auth() {
                     to="#"
                     className="font-semi-bold hover-color-tertiary"
                     title="Sign In"
+                    onClick={() => handleAuth("login")}
                   >
                     Sign In
                   </Link>
@@ -250,6 +250,6 @@ export default function Auth() {
           </div>
         </section>
       </div>
-    </div>
+    </Modal>
   );
 }

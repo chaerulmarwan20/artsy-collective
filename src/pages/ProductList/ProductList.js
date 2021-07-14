@@ -280,38 +280,41 @@ export default function ProductList() {
     },
   ];
 
-  useEffect(() => {
-    document.title = "Artsy Collective | Product List";
+  const handleAccordions = (e) => {
+    let target;
 
-    const accordionHeading = document.querySelectorAll(".accordion-header");
-    const btnFilter = document.querySelector(".list-filter-menu button");
+    if (!e.target.classList.contains("accordion-header")) {
+      target = e.target.parentElement.nextElementSibling;
+      e.target.parentElement.classList.toggle("active");
+    } else {
+      target = e.target.nextElementSibling;
+      e.target.classList.toggle("active");
+    }
+
+    target.classList.toggle("active");
+  };
+
+  const handleSidebarMobile = (type) => {
     const breadcrumbs = document.querySelector(".breadcrumbs");
     const sidebar = document.querySelector(".sidebar");
     const collection = document.querySelector(".collection");
-    const btnClose = document.querySelector(".sidebar-header button");
     const footer = document.querySelector("footer");
 
-    accordionHeading.forEach((item) => {
-      item.addEventListener("click", function () {
-        const sibling = this.nextElementSibling;
-        this.classList.toggle("active");
-        sibling.classList.toggle("active");
-      });
-    });
-
-    btnFilter.addEventListener("click", () => {
+    if (type === "filter") {
       sidebar.classList.add("active");
       breadcrumbs.classList.remove("active");
       collection.classList.remove("active");
       footer.classList.remove("active");
-    });
-
-    btnClose.addEventListener("click", () => {
+    } else {
       sidebar.classList.remove("active");
       breadcrumbs.classList.add("active");
       collection.classList.add("active");
       footer.classList.add("active");
-    });
+    }
+  };
+
+  useEffect(() => {
+    document.title = "Artsy Collective | Product List";
   }, []);
 
   return (
@@ -325,19 +328,23 @@ export default function ProductList() {
           <div className="wrapper relative-wrapper sidebar-header">
             <div className="relative-header">
               <p className="font-semi-bold">Filter</p>
-              <ButtonClose className="btn-close hover-opacity-primary" />
+              <ButtonClose
+                className="btn-close hover-opacity-primary"
+                onClick={() => handleSidebarMobile("close")}
+              />
             </div>
           </div>
           <hr />
           <div className="wrapper sidebar-body">
             <div className="filter-sidebar">
               <p className="font-semi-bold">Filter</p>
-              <button
+              <Button
                 type="button"
                 className="font-medium hover-color-secondary"
+                isSmall
               >
                 Reset
-              </button>
+              </Button>
             </div>
             <Accordion
               classWrapper="accordion-sidebar category-accordion"
@@ -347,6 +354,7 @@ export default function ProductList() {
               title="Category"
               classBody="accordion-body-product-list active"
               classParagraph="font-bold"
+              onClick={handleAccordions}
             >
               <InputCheckbox
                 list={listCheckboxCategory}
@@ -362,6 +370,7 @@ export default function ProductList() {
               title="Featured"
               classBody="accordion-body-product-list active"
               classParagraph="font-bold"
+              onClick={handleAccordions}
             >
               <InputCheckbox
                 list={listCheckboxFeatured}
@@ -377,6 +386,7 @@ export default function ProductList() {
               title="Price Range (Rp)"
               classBody="price-accordion accordion-body-product-list active"
               classParagraph="font-bold"
+              onClick={handleAccordions}
             >
               <InputRange value="234097 Produk" />
             </Accordion>
@@ -388,6 +398,7 @@ export default function ProductList() {
               title="Color"
               classBody="color-accordion accordion-body-product-list active"
               classParagraph="font-bold"
+              onClick={handleAccordions}
             >
               <InputColor
                 list={listColor}
@@ -403,6 +414,7 @@ export default function ProductList() {
               title="Material"
               classBody="accordion-body-product-list active"
               classParagraph="font-bold"
+              onClick={handleAccordions}
             >
               <InputCheckbox
                 list={listCheckboxMaterial}
@@ -454,6 +466,7 @@ export default function ProductList() {
                 <Button
                   type="button"
                   className="btn-filter hover-opacity-primary"
+                  onClick={() => handleSidebarMobile("filter")}
                   isOutline
                 >
                   <span>Filter</span>
