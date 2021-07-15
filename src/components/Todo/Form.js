@@ -20,6 +20,7 @@ export default function Form({ value, change, add, isUpdate, update, filter }) {
             value={value}
             onChange={(e) => change(e.target.value)}
             isSingle
+            isTodo
           />
           <Button type="submit" className="todo-button" isSmall>
             {isUpdate ? "Update" : "Add"}

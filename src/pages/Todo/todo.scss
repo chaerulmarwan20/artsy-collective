@@ -73,8 +73,12 @@
     padding: 16px;
     border-radius: 4px;
     margin-bottom: 15px;
-    p.completed {
-      text-decoration-line: line-through;
+    p {
+      font-size: 14px;
+      line-height: 16px;
+      &.completed {
+        text-decoration-line: line-through;
+      }
     }
     &.completed {
       background-color: darken($primaryColor, 15%);

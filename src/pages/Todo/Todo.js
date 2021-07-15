@@ -26,19 +26,14 @@ export default function Todo() {
 
   const handleAdd = (e) => {
     e.preventDefault();
-    setTodo([
-      ...todo,
-      { id: Math.floor(Math.random() * 100) + 1, task: input, complete: false },
-    ]);
+    setTodo([...todo, { id: todo.length + 1, task: input, complete: false }]);
     setInput("");
   };
 
   const handleToggle = (id) => {
     setTodo(
       todo.map((item) => {
-        return item.id === id
-          ? { ...item, complete: !item.complete }
-          : { ...item };
+        return item.id === id ? { ...item, complete: !item.complete } : item;
       })
     );
   };
@@ -50,6 +45,7 @@ export default function Todo() {
   const handleEdit = (id) => {
     setIsUpdate(true);
     const inputEdit = todo.filter((item) => item.id === id);
+    console.log(inputEdit[0]);
     setId(inputEdit[0].id);
     setInput(inputEdit[0].task);
   };
@@ -58,13 +54,7 @@ export default function Todo() {
     e.preventDefault();
     setTodo(
       todo.map((item) => {
-        return item.id === id
-          ? {
-              id: Math.floor(Math.random() * 100) + 1,
-              task: input,
-              complete: false,
-            }
-          : { ...item };
+        return item.id === id ? { ...item, task: input } : item;
       })
     );
     setIsUpdate(false);
@@ -77,18 +67,10 @@ export default function Todo() {
 
     switch (filter) {
       case "Completed":
-        setFilterTodo(
-          todo.filter((item) => {
-            return item.complete;
-          })
-        );
+        setFilterTodo(todo.filter((item) => item.complete));
         break;
       case "Uncompleted":
-        setFilterTodo(
-          todo.filter((item) => {
-            return !item.complete;
-          })
-        );
+        setFilterTodo(todo.filter((item) => !item.complete));
         break;
       default:
         setFilterTodo(todo);

@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import propTypes from "prop-types";
 
 import "./form.scss";
 
 export default function Input(props) {
+  const inputRef = useRef(null);
+
   const className = ["form-group"];
   className.push(props.classForm);
+
+  useEffect(() => {
+    props.isTodo && inputRef.current.focus();
+  });
 
   if (props.isSingle) {
     return (
@@ -19,6 +25,7 @@ export default function Input(props) {
         onChange={props.onChange}
         pattern={props.pattern}
         placeholder={props.placeholder}
+        ref={inputRef}
       />
     );
   }
@@ -72,4 +79,5 @@ Input.propTypes = {
   pattern: propTypes.string,
   isRow: propTypes.bool,
   isSingle: propTypes.bool,
+  isTodo: propTypes.bool,
 };
