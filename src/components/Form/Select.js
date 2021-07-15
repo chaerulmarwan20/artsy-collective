@@ -6,7 +6,11 @@ export default function Select(props) {
   className.push(props.className);
 
   return (
-    <select className={className.join(" ")} defaultValue={props.value}>
+    <select
+      className={className.join(" ")}
+      defaultValue={props.value}
+      onChange={props.onChange}
+    >
       {props.list.map((item, index) => {
         return (
           <option value={item} key={index}>

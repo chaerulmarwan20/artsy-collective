@@ -246,7 +246,7 @@ export default function ProductDetail() {
                   type="text"
                   classInput="font-medium qty-value"
                   name="qty"
-                  value={qty}
+                  value={String(qty)}
                   max={4}
                   onChange={handleQty}
                   pattern="[0-9]*"
