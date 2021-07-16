@@ -52,8 +52,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 66px;
-  height: 28px;
+  padding: 4px 8px;
   background-color: #cd5b63;
   border-radius: 4px;
   @include typography(14px, 20px, $bgColor);

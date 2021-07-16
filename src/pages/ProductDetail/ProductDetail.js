@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import "./product-detail.scss";
@@ -15,52 +16,27 @@ import Modal from "../../components/Modal/Modal";
 
 import Rupiah from "../../helpers/Rupiah";
 
-import ProductDetail1 from "../../assets/img/product-detail-1.png";
-import ProductDetail2 from "../../assets/img/product-detail-2.jpg";
-import ProductDetail3 from "../../assets/img/product-detail-3.png";
 import Star from "../../assets/icon/star.svg";
 import Minus from "../../assets/icon/minus.svg";
 import Plus from "../../assets/icon/plus.svg";
 import Award from "../../assets/icon/award.svg";
 import Info from "../../assets/icon/info.svg";
-import ModalProduct from "../../assets/img/modal-product.jpg";
 
 export default function ProductDetail() {
+  const apiUrl = process.env.REACT_APP_API;
+  const apiImg = process.env.REACT_APP_API_IMG;
+
+  const [pokemon, setPokemon] = useState([]);
+  const [imgPokemon, setImgPokemon] = useState([]);
+  const [ability, setAbility] = useState([]);
+  const [stats, setStats] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [star, setStar] = useState(null);
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
   const [qty, setQty] = useState(1);
   const [color, setColor] = useState("Gold");
 
-  const listBreadcrumb = [
-    {
-      href: "#",
-      title: "Home",
-      active: false,
-    },
-    {
-      href: "#",
-      title: "Collections",
-      active: false,
-    },
-    {
-      href: "#",
-      title: "Pave Threader Earrings",
-      active: true,
-    },
-  ];
-
-  const listCarousel = [
-    {
-      img: ProductDetail1,
-      title: "Product Detail 1",
-    },
-    {
-      img: ProductDetail2,
-      title: "Product Detail 2",
-    },
-    {
-      img: ProductDetail3,
-      title: "Product Detail 3",
-    },
-  ];
+  const { id } = useParams();
 
   const listColor = [
     {
@@ -132,24 +108,75 @@ export default function ProductDetail() {
   useEffect(() => {
     document.title = "Artsy Collective | Product Detail";
     handleWindow();
-  }, []);
+
+    fetch(`${apiUrl}/pokemon/${id}/`)
+      .then((res) => res.json())
+      .then((res) => {
+        setPokemon(res);
+        setAbility(
+          res.abilities.map((item) => {
+            return item.ability.name;
+          })
+        );
+        setStats(
+          res.stats.map((item) => {
+            return item.stat.name;
+          })
+        );
+        setTypes(
+          res.types.map((item) => {
+            return item.type.name;
+          })
+        );
+        const pokeStar = Math.ceil(res.moves.length / 20);
+        setStar(pokeStar > 5 ? 5 : pokeStar);
+        setImgPokemon([
+          {
+            img: `${apiImg}/${id}.png`,
+            title: res.name,
+          },
+          {
+            img: `${apiImg}/${id}.png`,
+            title: res.name,
+          },
+          {
+            img: `${apiImg}/${id}.png`,
+            title: res.name,
+          },
+        ]);
+        setBreadcrumbs([
+          {
+            href: "/",
+            title: "Home",
+            active: false,
+          },
+          {
+            href: "/product-list",
+            title: "Collections",
+            active: false,
+          },
+          {
+            href: `/product-detail/${id}`,
+            title: res.name,
+            active: true,
+          },
+        ]);
+      });
+  }, [apiUrl, apiImg, id]);
 
   return (
     <>
-      <Breadcrumb
-        className="product-detail-breadcrumbs"
-        list={listBreadcrumb}
-      />
+      <Breadcrumb className="product-detail-breadcrumbs" list={breadcrumbs} />
       <div className="wrapper detail-product">
         <section className="gallery-product">
-          <Carousel list={listCarousel} />
+          <Carousel list={imgPokemon} />
           <div className="slick-nav"></div>
         </section>
         <section className="description-product">
           <div className="header-desc">
-            <p className="font-semi-bold name">Pave Threader Earrings</p>
+            <p className="font-semi-bold name">{pokemon.name}</p>
             <div className="star">
-              {Array.from(Array(5).keys()).map((item, index) => {
+              {Array.from(Array(star).keys()).map((item, index) => {
                 return (
                   <img
                     src={Star}
@@ -160,10 +187,14 @@ export default function ProductDetail() {
                 );
               })}
             </div>
-            <p className="font-bold price">{Rupiah(104300)}</p>
+            <p className="font-bold price">{Rupiah(pokemon.weight * 1000)}</p>
             <div className="font-medium promo">
-              <div className="font-semi-bold discount">30% Off</div>
-              <span>{Rupiah(135590)}</span>
+              {pokemon.base_experience > 100 && (
+                <>
+                  <div className="font-semi-bold discount">Top Poke</div>
+                  <span>{Rupiah(pokemon.height * 1000)}</span>
+                </>
+              )}
             </div>
           </div>
           <div className="body-desc">
@@ -171,62 +202,46 @@ export default function ProductDetail() {
               classWrapper="accordion-container"
               classHeader="accordion-header-product-detail
                 hover-opacity-primary"
-              title="Description"
+              title="Abilities"
               onClick={handleAccordions}
             >
-              <p>
-                Elevate your everyday look with these threader earrings designed
-                with pave crystals.
-              </p>
-              <p className="earring">
-                Earring Drop Length: 1.32" <br />
-                Earring Width: 0.11"
-              </p>
+              {ability.map((item, index) => {
+                return <p key={index}>{item}</p>;
+              })}
             </Accordion>
             <Accordion
               classWrapper="accordion-container"
               classHeader="accordion-header-product-detail
                 hover-opacity-primary"
-              title="Material"
+              title="Stats"
               onClick={handleAccordions}
             >
               <ul>
-                <li className="font-medium">Fabric</li>
-                <li className="font-medium">Lining</li>
-                <li className="font-medium">Silhouette</li>
-              </ul>
-              <ul>
-                <li className="font-medium">Metal 100%</li>
-                <li className="font-medium">Partial</li>
-                <li className="font-medium">Drop</li>
+                {stats.map((item, index) => {
+                  return (
+                    <li className="font-medium" key={index}>
+                      {item}
+                    </li>
+                  );
+                })}
               </ul>
             </Accordion>
             <Accordion
               classWrapper="accordion-container"
               classHeader="accordion-header-product-detail
                 hover-opacity-primary"
-              title="Shipping & Returns"
+              title="Types"
               onClick={handleAccordions}
             >
               <ul>
-                <li className="font-medium">Standard Delivery</li>
-                <li className="font-medium">Express Delivery</li>
+                {types.map((item, index) => {
+                  return (
+                    <li className="font-medium" key={index}>
+                      {item}
+                    </li>
+                  );
+                })}
               </ul>
-              <ul>
-                <li className="font-medium">Within 6 - 9 working days</li>
-                <li className="font-medium">Within 3 - 5 working days</li>
-              </ul>
-              <p>
-                Find out more about our{" "}
-                <Link
-                  to="#"
-                  className="hover-color-primary"
-                  title="Returns & Exchanges"
-                >
-                  Returns & Exchanges
-                </Link>
-                . All orders are currently shipped out from Indonesia
-              </p>
             </Accordion>
           </div>
         </section>
@@ -277,7 +292,9 @@ export default function ProductDetail() {
             </div>
             <div className="sub-total">
               <p className="font-medium">Subtotal:</p>
-              <span className="font-bold">{Rupiah(104300)}</span>
+              <span className="font-bold">
+                {Rupiah(pokemon.weight * 1000 * qty)}
+              </span>
             </div>
             <div className="btn-wrapper">
               <Button
@@ -322,12 +339,16 @@ export default function ProductDetail() {
           </div>
           <div className="body-cart">
             <div className="img-cart">
-              <img src={ModalProduct} className="img-block" alt="Modal" />
+              <img
+                src={`${apiImg}/${id}.png`}
+                className="img-block"
+                alt={pokemon.name}
+              />
             </div>
             <div className="detail-cart">
-              <h2 className="font-medium">Pave threader Earrings</h2>
-              <span>x1</span>
-              <p className="font-bold">{Rupiah(104300)}</p>
+              <h2 className="font-medium">{pokemon.name}</h2>
+              <span>x{qty}</span>
+              <p className="font-bold">{Rupiah(pokemon.weight * 1000 * qty)}</p>
             </div>
           </div>
           <div className="footer-cart">

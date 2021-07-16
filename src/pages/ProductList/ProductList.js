@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./product-list.scss";
 
@@ -15,22 +15,31 @@ import Pagination from "../../components/Pagination/Pagination";
 
 import Ring from "../../assets/img/ring.png";
 import Filter from "../../assets/icon/filter.svg";
-import Product1 from "../../assets/img/product-1.jpg";
-import Product2 from "../../assets/img/product-2.jpg";
-import Product3 from "../../assets/img/product-3.jpg";
-import Product4 from "../../assets/img/product-4.jpg";
-import Product5 from "../../assets/img/product-5.jpg";
-import Product6 from "../../assets/img/product-6.jpg";
 
 export default function ProductList() {
+  const apiUrl = process.env.REACT_APP_API;
+  const apiImg = process.env.REACT_APP_API_IMG;
+
+  // const [offset, setOffset] = useState(0);
+  const offset = 0;
+  // const [limit, setLimit] = useState(12);
+  const limit = 12;
+  const [pokemon, setPokemon] = useState([]);
+  // const [page, setPage] = useState([
+  //   {
+  //     currentPage: 1,
+  //     totalPage: 1,
+  //   },
+  // ]);
+
   const listBreadcrumb = [
     {
-      href: "#",
+      href: "/",
       title: "Home",
       active: false,
     },
     {
-      href: "#",
+      href: "/product-list",
       title: "Collections",
       active: false,
     },
@@ -193,75 +202,6 @@ export default function ProductList() {
   const optionValueSelling = ["Best Selling", "Price"];
   const optionValueSort = ["Sort", ...optionValueSelling];
 
-  const listProduct = [
-    {
-      href: "#",
-      title: "Circular Link Drop Earrings - Gold",
-      img: Product1,
-      isDiscount: true,
-      discount: "30% Off",
-      isBest: true,
-      label: "Best Seller",
-      price: 104300,
-      piece: 135590,
-    },
-    {
-      href: "#",
-      title: "Multi-Ring Necklace",
-      img: Product2,
-      isDiscount: false,
-      discount: "",
-      isBest: false,
-      label: "",
-      price: 2699000,
-      piece: 0,
-    },
-    {
-      href: "#",
-      title: "Black Accent Collar Necklace",
-      img: Product3,
-      isDiscount: true,
-      discount: "30% Off",
-      isBest: true,
-      label: "New Arrival",
-      price: 1799000,
-      piece: 2338700,
-    },
-    {
-      href: "#",
-      title: "Silver-Tone Hoop Clip Earrings",
-      img: Product4,
-      isDiscount: false,
-      discount: "",
-      isBest: false,
-      label: "",
-      price: 4098300,
-      piece: 0,
-    },
-    {
-      href: "#",
-      title: "Pearl And Crystal Gold-Tone Clip",
-      img: Product5,
-      isDiscount: false,
-      discount: "",
-      isBest: true,
-      label: "Best Seller",
-      price: 4449000,
-      piece: 0,
-    },
-    {
-      href: "#",
-      title: "Gold-Tone Tubular Hoop Earrings",
-      img: Product6,
-      isDiscount: true,
-      discount: "30% Off",
-      isBest: true,
-      label: "New Arrival",
-      price: 1463000,
-      piece: 2090000,
-    },
-  ];
-
   const listPagination = [
     {
       href: "#",
@@ -279,6 +219,14 @@ export default function ProductList() {
       isActive: false,
     },
   ];
+
+  // const previous = () => {
+  //   setOffset(offset <= 0 ? 0 : offset - limit);
+  // };
+
+  // const next = () => {
+  //   setOffset(offset + limit);
+  // };
 
   const handleAccordions = (e) => {
     let target;
@@ -315,7 +263,20 @@ export default function ProductList() {
 
   useEffect(() => {
     document.title = "Artsy Collective | Product List";
-  }, []);
+
+    fetch(`${apiUrl}/pokemon?offset=${offset}&limit=${limit}`)
+      .then((res) => res.json())
+      .then((res) => {
+        res.results.forEach((item) => {
+          const url = item.url;
+          fetch(url)
+            .then((res) => res.json())
+            .then((res) => {
+              setPokemon((oldPokemon) => [...oldPokemon, res]);
+            });
+        });
+      });
+  }, [apiUrl]);
 
   return (
     <>
@@ -482,18 +443,18 @@ export default function ProductList() {
             </div>
           </div>
           <div className="product-collection">
-            {listProduct.map((item, index) => {
+            {pokemon.map((item, index) => {
               return (
                 <Card
-                  href={item.href}
-                  title={item.title}
-                  img={item.img}
-                  isDiscount={item.isDiscount}
-                  discount={item.discount}
-                  isBest={item.isBest}
-                  label={item.label}
-                  price={item.price}
-                  piece={item.piece}
+                  href={`/product-detail/${item.id}`}
+                  title={item.name}
+                  img={`${apiImg}/${item.id}.png`}
+                  isDiscount={item.base_experience > 100 && true}
+                  discount={"Top Poke"}
+                  isBest={item.base_experience > 100 && true}
+                  label={"Best Poke"}
+                  price={item.weight * 1000}
+                  piece={item.height * 1000}
                   key={index}
                 />
               );

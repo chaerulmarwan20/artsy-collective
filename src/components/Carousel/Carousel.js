@@ -46,7 +46,7 @@ export default function Carousel(props) {
     fade: true,
     infinite: true,
     speed: 500,
-    initialSlide: 1,
+    initialSlide: 0,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     customPaging: function (i) {
