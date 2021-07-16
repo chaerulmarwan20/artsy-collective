@@ -450,9 +450,9 @@ export default function ProductList() {
                   title={item.name}
                   img={`${apiImg}/${item.id}.png`}
                   isDiscount={item.base_experience > 100 && true}
-                  discount={"Top Poke"}
+                  discount={"30% Off"}
                   isBest={item.base_experience > 100 && true}
-                  label={"Best Poke"}
+                  label={"Best Pokemon"}
                   price={item.weight * 1000}
                   piece={item.height * 1000}
                   key={index}
