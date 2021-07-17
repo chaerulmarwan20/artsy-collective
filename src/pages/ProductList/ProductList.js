@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+// import { useLocation } from "react-router-dom";
 
 import "./product-list.scss";
 
@@ -20,17 +21,18 @@ export default function ProductList() {
   const apiUrl = process.env.REACT_APP_API;
   const apiImg = process.env.REACT_APP_API_IMG;
 
-  // const [offset, setOffset] = useState(0);
-  const offset = 0;
-  // const [limit, setLimit] = useState(12);
-  const limit = 12;
+  // const useQuery = () => new URLSearchParams(useLocation().search);
+
+  const [offset, setOffset] = useState(0);
+  const [limit, setLimit] = useState(12);
   const [pokemon, setPokemon] = useState([]);
-  // const [page, setPage] = useState([
-  //   {
-  //     currentPage: 1,
-  //     totalPage: 1,
-  //   },
-  // ]);
+  const [page, setPage] = useState({
+    totalData: null,
+    currentPage: null,
+    totalPage: null,
+  });
+
+  // const query = useQuery();
 
   const listBreadcrumb = [
     {
@@ -220,13 +222,17 @@ export default function ProductList() {
     },
   ];
 
-  // const previous = () => {
-  //   setOffset(offset <= 0 ? 0 : offset - limit);
-  // };
+  const previous = () => {
+    setOffset(offset <= 0 ? 0 : offset - limit);
+  };
 
-  // const next = () => {
-  //   setOffset(offset + limit);
-  // };
+  const next = () => {
+    setOffset(
+      page.currentPage === page.totalPage
+        ? page.totalData - limit
+        : offset + limit
+    );
+  };
 
   const handleAccordions = (e) => {
     let target;
@@ -264,19 +270,25 @@ export default function ProductList() {
   useEffect(() => {
     document.title = "Artsy Collective | Product List";
 
-    fetch(`${apiUrl}/pokemon?offset=${offset}&limit=${limit}`)
+    fetch(`${apiUrl}/pokemn?offset=${offset}&limit=${limit}`)
       .then((res) => res.json())
       .then((res) => {
+        setPage({
+          totalData: res.count,
+          currentPage: Math.ceil((offset - 1) / limit) + 1,
+          totalPage: Math.ceil(res.count / limit),
+        });
+        setPokemon([]);
         res.results.forEach((item) => {
           const url = item.url;
           fetch(url)
             .then((res) => res.json())
-            .then((res) => {
-              setPokemon((oldPokemon) => [...oldPokemon, res]);
-            });
+            .then((res) => setPokemon((oldPokemon) => [...oldPokemon, res]))
+            .catch((err) => console.log(err.message));
         });
-      });
-  }, [apiUrl]);
+      })
+      .catch((err) => console.log(err.message));
+  }, [apiUrl, offset, limit]);
 
   return (
     <>
@@ -460,7 +472,13 @@ export default function ProductList() {
               );
             })}
           </div>
-          <Pagination list={listPagination} />
+          <Pagination
+            list={listPagination}
+            next={next}
+            previous={previous}
+            offset={offset}
+            limit={limit}
+          />
         </section>
       </div>
     </>

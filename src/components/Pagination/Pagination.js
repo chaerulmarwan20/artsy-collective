@@ -12,7 +12,12 @@ export default function Pagination(props) {
     <nav className="pagination">
       <ul>
         <li className="chevron hover-opacity-primary">
-          <Link to="#" className="font-medium">
+          <Link
+            // to={`/product-list?offset=${props.offset}&limit=${props.limit}`}
+            to="#"
+            className="font-medium"
+            onClick={props.previous}
+          >
             <img src={ChevronLeft} className="img-block" alt="Chevron Left" />
           </Link>
         </li>
@@ -32,7 +37,12 @@ export default function Pagination(props) {
           );
         })}
         <li className="chevron hover-opacity-primary">
-          <Link to="#" className="font-medium">
+          <Link
+            // to={`/product-list?offset=${props.offset}&limit=${props.limit}`}
+            to="#"
+            className="font-medium"
+            onClick={props.next}
+          >
             <img src={ChevronRight} className="img-block" alt="Chevron Right" />
           </Link>
         </li>
@@ -43,4 +53,8 @@ export default function Pagination(props) {
 
 Pagination.propTypes = {
   list: propTypes.array,
+  offset: propTypes.number,
+  limit: propTypes.number,
+  previous: propTypes.func,
+  next: propTypes.func,
 };
