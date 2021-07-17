@@ -270,7 +270,7 @@ export default function ProductList() {
   useEffect(() => {
     document.title = "Artsy Collective | Product List";
 
-    fetch(`${apiUrl}/pokemn?offset=${offset}&limit=${limit}`)
+    fetch(`${apiUrl}/pokemon?offset=${offset}&limit=${limit}`)
       .then((res) => res.json())
       .then((res) => {
         setPage({
