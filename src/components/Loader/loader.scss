@@ -1,0 +1,45 @@
+@import "../../assets/scss/variables/color";
+@import "../../assets/scss/mixins/typography";
+
+.loader {
+  &-wrapper {
+    margin: 20px auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h2 {
+      @include typography(16px, 19px);
+    }
+  }
+  &-item {
+    border: 7px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 7px solid $primaryColor;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin-bottom: 16px;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .loader {
+    &-wrapper {
+      h2 {
+        font-size: 20px;
+        line-height: 23px;
+      }
+    }
+  }
+}

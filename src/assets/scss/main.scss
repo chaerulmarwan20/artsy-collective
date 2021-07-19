@@ -70,6 +70,9 @@ body {
   display: block;
   width: 100%;
 }
+.img-pokemon {
+  width: 160px;
+}
 .font {
   &-medium {
     font-weight: 500;
@@ -101,6 +104,9 @@ body {
   }
   .wrapper {
     padding: 0 32px;
+  }
+  .img-pokemon {
+    width: 244px;
   }
 }
 

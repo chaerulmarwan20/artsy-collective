@@ -14,7 +14,11 @@ export default function CardProductList(props) {
         className="item-product-img hover-opacity-secondary"
         title={props.title}
       >
-        <img className="img-block" src={props.img} alt={props.title} />
+        <img
+          className="img-block img-pokemon"
+          src={props.img}
+          alt={props.title}
+        />
         {props.isDiscount && (
           <div className="ribbon-product font-semi-bold">{props.discount}</div>
         )}

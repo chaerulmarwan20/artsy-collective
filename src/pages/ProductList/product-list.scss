@@ -230,6 +230,7 @@
 .collection {
   display: none;
   overflow-x: hidden;
+  width: 100%;
   &.active {
     display: block;
   }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { animateScroll as scroll } from "react-scroll";
 
 import "./product-detail.scss";
 
@@ -24,7 +25,7 @@ import Info from "../../assets/icon/info.svg";
 
 export default function ProductDetail() {
   const apiUrl = process.env.REACT_APP_API;
-  const apiImg = process.env.REACT_APP_API_IMG;
+  // const apiImg = process.env.REACT_APP_API_IMG;
 
   const [pokemon, setPokemon] = useState([]);
   const [imgPokemon, setImgPokemon] = useState([]);
@@ -105,10 +106,7 @@ export default function ProductDetail() {
     });
   };
 
-  useEffect(() => {
-    document.title = "Artsy Collective | Product Detail";
-    handleWindow();
-
+  const fetchPokemonDetail = () => {
     fetch(`${apiUrl}/pokemon/${id}/`)
       .then((res) => res.json())
       .then((res) => {
@@ -132,15 +130,15 @@ export default function ProductDetail() {
         setStar(pokeStar > 5 ? 5 : pokeStar);
         setImgPokemon([
           {
-            img: `${apiImg}/${id}.png`,
+            img: res.sprites.front_default,
             title: res.name,
           },
           {
-            img: `${apiImg}/${id}.png`,
+            img: res.sprites.back_default,
             title: res.name,
           },
           {
-            img: `${apiImg}/${id}.png`,
+            img: res.sprites.front_shiny,
             title: res.name,
           },
         ]);
@@ -162,7 +160,14 @@ export default function ProductDetail() {
           },
         ]);
       });
-  }, [apiUrl, apiImg, id]);
+  };
+
+  useEffect(() => {
+    document.title = "Artsy Collective | Product Detail";
+    scroll.scrollToTop();
+    handleWindow();
+    fetchPokemonDetail();
+  }, []);
 
   return (
     <>
@@ -191,7 +196,7 @@ export default function ProductDetail() {
             <div className="font-medium promo">
               {pokemon.base_experience > 100 && (
                 <>
-                  <div className="font-semi-bold discount">Top Poke</div>
+                  <div className="font-semi-bold discount">30% Off</div>
                   <span>{Rupiah(pokemon.height * 1000)}</span>
                 </>
               )}
@@ -340,7 +345,8 @@ export default function ProductDetail() {
           <div className="body-cart">
             <div className="img-cart">
               <img
-                src={`${apiImg}/${id}.png`}
+                // src={`${apiImg}/${id}.png`}
+                src={pokemon.sprites && pokemon.sprites.front_default}
                 className="img-block"
                 alt={pokemon.name}
               />

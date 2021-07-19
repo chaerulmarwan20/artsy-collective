@@ -11,6 +11,7 @@ import Homepage from "./pages/Homepage/Homepage";
 import ProductList from "./pages/ProductList/ProductList";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Todo from "./pages/Todo/Todo";
+import Skeleton from "./pages/Skeleton/Skeleton";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="/product-list" component={ProductList} />
       <Route path="/product-detail/:id" component={ProductDetail} />
       <Route path="/todo" component={Todo} />
+      <Route path="/skeleton" component={Skeleton} />
       <Footer />
     </Router>
   );

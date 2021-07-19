@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-// import { useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import * as Scroll from "react-scroll";
 
+import "react-toastify/dist/ReactToastify.css";
 import "./product-list.scss";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -13,26 +15,25 @@ import Button from "../../components/Button/Button";
 import Select from "../../components/Form/Select";
 import Card from "../../components/Product/CardProductList";
 import Pagination from "../../components/Pagination/Pagination";
+import Loader from "../../components/Loader/Loader";
 
 import Ring from "../../assets/img/ring.png";
 import Filter from "../../assets/icon/filter.svg";
 
 export default function ProductList() {
   const apiUrl = process.env.REACT_APP_API;
-  const apiImg = process.env.REACT_APP_API_IMG;
+  // const apiImg = process.env.REACT_APP_API_IMG;
 
-  // const useQuery = () => new URLSearchParams(useLocation().search);
+  const Element = Scroll.Element;
 
-  const [offset, setOffset] = useState(0);
-  const [limit, setLimit] = useState(12);
+  const dataLimit = 12;
+  const pageLimit = 3;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [offset, setOffset] = useState(currentPage * dataLimit - dataLimit);
+  const [totalPage, setTotalPage] = useState(null);
   const [pokemon, setPokemon] = useState([]);
-  const [page, setPage] = useState({
-    totalData: null,
-    currentPage: null,
-    totalPage: null,
-  });
-
-  // const query = useQuery();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const listBreadcrumb = [
     {
@@ -204,36 +205,6 @@ export default function ProductList() {
   const optionValueSelling = ["Best Selling", "Price"];
   const optionValueSort = ["Sort", ...optionValueSelling];
 
-  const listPagination = [
-    {
-      href: "#",
-      number: 1,
-      isActive: true,
-    },
-    {
-      href: "#",
-      number: 2,
-      isActive: false,
-    },
-    {
-      href: "#",
-      number: 3,
-      isActive: false,
-    },
-  ];
-
-  const previous = () => {
-    setOffset(offset <= 0 ? 0 : offset - limit);
-  };
-
-  const next = () => {
-    setOffset(
-      page.currentPage === page.totalPage
-        ? page.totalData - limit
-        : offset + limit
-    );
-  };
-
   const handleAccordions = (e) => {
     let target;
 
@@ -267,31 +238,39 @@ export default function ProductList() {
     }
   };
 
-  useEffect(() => {
-    document.title = "Artsy Collective | Product List";
-
-    fetch(`${apiUrl}/pokemon?offset=${offset}&limit=${limit}`)
+  const fetchPokemon = async () => {
+    setLoading(true);
+    await fetch(`${apiUrl}/pokemon?offset=${offset}&limit=${dataLimit}`)
       .then((res) => res.json())
       .then((res) => {
-        setPage({
-          totalData: res.count,
-          currentPage: Math.ceil((offset - 1) / limit) + 1,
-          totalPage: Math.ceil(res.count / limit),
-        });
         setPokemon([]);
+        setError(false);
+        setTotalPage(Math.ceil(res.count / dataLimit));
         res.results.forEach((item) => {
           const url = item.url;
           fetch(url)
             .then((res) => res.json())
-            .then((res) => setPokemon((oldPokemon) => [...oldPokemon, res]))
-            .catch((err) => console.log(err.message));
+            .then((res) => setPokemon((oldPokemon) => [...oldPokemon, res]));
         });
       })
-      .catch((err) => console.log(err.message));
-  }, [apiUrl, offset, limit]);
+      .catch((err) => {
+        setError("Something went wrong!");
+      });
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    document.title = "Artsy Collective | Product List";
+    fetchPokemon();
+    const notify = () => toast.error(error);
+    error && notify();
+  }, [offset, error]);
 
   return (
     <>
+      {error && <ToastContainer position="bottom-right" />}
       <Breadcrumb
         className="product-list-breadcrumbs active"
         list={listBreadcrumb}
@@ -420,7 +399,7 @@ export default function ProductList() {
             <img src={Ring} className="img-block" alt="Ring" />
           </div>
           <div className="filter-collection">
-            <div className="filter-header">
+            <Element className="filter-header">
               <h2 className="font-bold">View All Collections</h2>
               <div className="filter-sort">
                 <p>
@@ -433,7 +412,7 @@ export default function ProductList() {
                   list={optionValueSelling}
                 />
               </div>
-            </div>
+            </Element>
             <div className="filter-menu">
               <div className="list-filter-menu">
                 <Button
@@ -454,31 +433,40 @@ export default function ProductList() {
               <p className="amount">234097 Produk</p>
             </div>
           </div>
-          <div className="product-collection">
-            {pokemon.map((item, index) => {
-              return (
-                <Card
-                  href={`/product-detail/${item.id}`}
-                  title={item.name}
-                  img={`${apiImg}/${item.id}.png`}
-                  isDiscount={item.base_experience > 100 && true}
-                  discount={"30% Off"}
-                  isBest={item.base_experience > 100 && true}
-                  label={"Best Pokemon"}
-                  price={item.weight * 1000}
-                  piece={item.height * 1000}
-                  key={index}
-                />
-              );
-            })}
-          </div>
-          <Pagination
-            list={listPagination}
-            next={next}
-            previous={previous}
-            offset={offset}
-            limit={limit}
-          />
+          {!loading && !error ? (
+            <>
+              <div className="product-collection">
+                {pokemon.map((item, index) => {
+                  return (
+                    <Card
+                      href={`/product-detail/${item.id}`}
+                      title={item.name}
+                      // img={`${apiImg}/${item.id}.png`}
+                      img={item.sprites.front_default}
+                      isDiscount={item.base_experience > 100 && true}
+                      discount={"30% Off"}
+                      isBest={item.base_experience > 100 && true}
+                      label={"Best Pokemon"}
+                      price={item.weight * 1000}
+                      piece={item.height * 1000}
+                      key={index}
+                    />
+                  );
+                })}
+              </div>
+              <Pagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPage={totalPage}
+                offset={offset}
+                setOffset={setOffset}
+                dataLimit={dataLimit}
+                pageLimit={pageLimit}
+              />
+            </>
+          ) : (
+            !error && <Loader />
+          )}
         </section>
       </div>
     </>
