@@ -1,0 +1,121 @@
+{
+  "navbarMenu": [
+    {
+      "href": "#",
+      "title": "Collections"
+    },
+    {
+      "href": "#",
+      "title": "Coco Crush"
+    },
+    {
+      "href": "#",
+      "title": "High Jewelry"
+    },
+    {
+      "href": "#",
+      "title": "Bridal"
+    },
+    {
+      "href": "#",
+      "title": "Care & Services"
+    },
+    {
+      "href": "/todo",
+      "title": "To Do"
+    }
+  ],
+  "categoriesMenu": [
+    {
+      "href": "#",
+      "title": "View All"
+    },
+    {
+      "href": "#",
+      "title": "Rings"
+    },
+    {
+      "href": "#",
+      "title": "Bracelets"
+    },
+    {
+      "href": "#",
+      "title": "Necklaces"
+    },
+    {
+      "href": "#",
+      "title": "Earrings"
+    }
+  ],
+  "featuredMenu": [
+    {
+      "href": "#",
+      "title": "Coco Crush"
+    },
+    {
+      "href": "#",
+      "title": "Camélia"
+    },
+    {
+      "href": "#",
+      "title": "Ultra"
+    },
+    {
+      "href": "#",
+      "title": "Comète"
+    },
+    {
+      "href": "#",
+      "title": "Ruban"
+    },
+    {
+      "href": "#",
+      "title": "Baroque"
+    },
+    {
+      "href": "#",
+      "title": "Soleil de Artsy"
+    }
+  ],
+  "productMenu": [
+    {
+      "href": "#",
+      "title": "Coco Crush Ring"
+    },
+    {
+      "href": "#",
+      "title": "Camélia Bracelet"
+    },
+    {
+      "href": "#",
+      "title": "Ruban Collection"
+    }
+  ],
+  "navbarMenuMobile": [
+    {
+      "href": "#",
+      "title": "Collections",
+      "desc": "All Artsy’s fine jewelry"
+    },
+    {
+      "href": "#",
+      "title": "Coco Crush",
+      "desc": "Special Coco Crush’s Edition"
+    },
+    {
+      "href": "#",
+      "title": "High Jewelry",
+      "desc": "Artsy high jewelry signature"
+    },
+    {
+      "href": "#",
+      "title": "Bridal",
+      "desc": "Wedding, Engagement Rings"
+    },
+    {
+      "href": "#",
+      "title": "Care & Services",
+      "desc": "Book an Appoinment"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+.skeleton {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 16px;
+  width: calc(100% + 8px);
+  overflow-x: hidden;
+  &-wrapper {
+    width: 50%;
+    padding-right: 8px;
+    padding-bottom: 28px;
+  }
+  &-img {
+    height: 213px;
+  }
+  &-section-title {
+    margin-top: 12px;
+  }
+  &-section-price {
+    margin-top: 8px;
+  }
+  &-title {
+    height: 12px;
+  }
+  &-price {
+    max-width: 50%;
+    height: 30px;
+  }
+  &-pagination {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+    width: calc(100% + 12px);
+  }
+  &-chevron,
+  &-page-number {
+    width: 36px !important;
+    height: 36px;
+    margin-right: 12px;
+  }
+  &-page-number {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .skeleton {
+    &-wrapper {
+      width: 33.3%;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .skeleton {
+    padding-top: 24px;
+    width: calc(100% + 16px);
+    &-wrapper {
+      padding-right: 16px;
+      padding-bottom: 40px;
+    }
+    &-img {
+      height: 325px;
+    }
+    &-title {
+      height: 16px;
+    }
+    &-price {
+      height: 19px;
+    }
+    &-pagination {
+      padding-top: 16px;
+    }
+    &-chevron,
+    &-page-number {
+      width: 44px !important;
+      height: 44px;
+    }
+    &-page-number {
+      display: block !important;
+    }
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "listBreadcrumbs": [
+    {
+      "href": "/",
+      "title": "Home",
+      "active": false
+    },
+    {
+      "href": "/product-list",
+      "title": "Collections",
+      "active": false
+    },
+    {
+      "href": "#",
+      "title": "View All",
+      "active": true
+    }
+  ],
+  "listCheckbox": {
+    "category": [
+      {
+        "name": "view-all",
+        "label": "View All",
+        "class": ""
+      },
+      {
+        "name": "rings",
+        "label": "Rings",
+        "class": "transform-check"
+      },
+      {
+        "name": "bracelets",
+        "label": "Bracelets",
+        "class": ""
+      },
+      {
+        "name": "necklaces",
+        "label": "Necklaces",
+        "class": ""
+      },
+      {
+        "name": "earrings",
+        "label": "Earrings",
+        "class": "transform-check"
+      }
+    ],
+    "featured": [
+      {
+        "name": "coco-crush",
+        "label": "Coco Crush",
+        "class": ""
+      },
+      {
+        "name": "camélia",
+        "label": "Camélia",
+        "class": "transform-check"
+      },
+      {
+        "name": "comète",
+        "label": "Comète",
+        "class": ""
+      },
+      {
+        "name": "ruban",
+        "label": "Ruban",
+        "class": ""
+      },
+      {
+        "name": "baroque",
+        "label": "Baroque",
+        "class": "transform-check"
+      },
+      {
+        "name": "soleil-de-artsy",
+        "label": "Soleil de Artsy",
+        "class": ""
+      }
+    ],
+    "material": [
+      {
+        "name": "anti-rust",
+        "label": "Anti-Rust",
+        "class": ""
+      },
+      {
+        "name": "mixed",
+        "label": "Mixed",
+        "class": "transform-check"
+      },
+      {
+        "name": "gold",
+        "label": "Gold",
+        "class": ""
+      },
+      {
+        "name": "silver",
+        "label": "Silver",
+        "class": ""
+      },
+      {
+        "name": "metallic",
+        "label": "Metallic",
+        "class": "transform-check"
+      },
+      {
+        "name": "diamond",
+        "label": "Diamond",
+        "class": "transform-check"
+      }
+    ]
+  },
+  "listColor": [
+    {
+      "name": "one",
+      "id": "one"
+    },
+    {
+      "name": "two",
+      "id": "two"
+    },
+    {
+      "name": "three",
+      "id": "three"
+    },
+    {
+      "name": "four",
+      "id": "four"
+    },
+    {
+      "name": "five",
+      "id": "five"
+    },
+    {
+      "name": "six",
+      "id": "six"
+    },
+    {
+      "name": "seven",
+      "id": "seven"
+    },
+    {
+      "name": "eight",
+      "id": "eight"
+    },
+    {
+      "name": "nine",
+      "id": "nine"
+    },
+    {
+      "name": "ten",
+      "id": "ten"
+    },
+    {
+      "name": "eleven",
+      "id": "eleven"
+    },
+    {
+      "name": "twelve",
+      "id": "twelve"
+    },
+    {
+      "name": "thirteen",
+      "id": "thirteen"
+    }
+  ],
+  "optionValue": {
+    "selling": ["Best Selling", "Price"],
+    "sort": ["Sort", "Best Selling", "Price"]
+  }
+}

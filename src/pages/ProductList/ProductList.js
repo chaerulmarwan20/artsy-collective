@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import * as Scroll from "react-scroll";
+import queryString from "query-string";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./product-list.scss";
+
+import StaticData from "../../json/product-list.json";
+import { handleAccordions, handleSidebarMobile } from "./helpers";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import ButtonClose from "../../components/Button/ButtonClose";
@@ -15,265 +20,107 @@ import Button from "../../components/Button/Button";
 import Select from "../../components/Form/Select";
 import Card from "../../components/Product/CardProductList";
 import Pagination from "../../components/Pagination/Pagination";
-import Loader from "../../components/Loader/Loader";
+import SkeletonLoading from "../../components/Skeleton/SkeletonLoading";
+import Empty from "../../components/Empty/Empty";
 
+import DefaultImg from "../../assets/img/default-product.png";
 import Ring from "../../assets/img/ring.png";
 import Filter from "../../assets/icon/filter.svg";
 
 export default function ProductList() {
   const apiUrl = process.env.REACT_APP_API;
-  // const apiImg = process.env.REACT_APP_API_IMG;
-
   const Element = Scroll.Element;
 
-  const dataLimit = 12;
-  const pageLimit = 3;
-  const [currentPage, setCurrentPage] = useState(1);
-  const [offset, setOffset] = useState(currentPage * dataLimit - dataLimit);
-  const [totalPage, setTotalPage] = useState(null);
+  const history = useHistory();
+
+  const parsed = queryString.parse(useLocation().search, {
+    parseNumbers: true,
+  });
+  const queryCurrentPage = parsed.page;
+  const queryDataLimit = parsed.perPage;
+
+  const currentPage = queryCurrentPage > 0 ? queryCurrentPage : 1;
+  const dataLimit =
+    queryDataLimit > 0 && queryDataLimit <= 12 ? queryDataLimit : 12;
+  const pageNeighbours = 1;
+
   const [pokemon, setPokemon] = useState([]);
+  const [offset, setOffset] = useState(currentPage * dataLimit - dataLimit);
+  const [totalData, setTotalData] = useState(null);
+  const [totalPage, setTotalPage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [empty, setEmpty] = useState(false);
   const [error, setError] = useState(false);
 
-  const listBreadcrumb = [
-    {
-      href: "/",
-      title: "Home",
-      active: false,
-    },
-    {
-      href: "/product-list",
-      title: "Collections",
-      active: false,
-    },
-    {
-      href: "#",
-      title: "View All",
-      active: true,
-    },
-  ];
-
-  const listCheckboxCategory = [
-    {
-      name: "view-all",
-      label: "View All",
-      class: "",
-    },
-    {
-      name: "rings",
-      label: "Rings",
-      class: "transform-check",
-    },
-    {
-      name: "bracelets",
-      label: "Bracelets",
-      class: "",
-    },
-    {
-      name: "necklaces",
-      label: "Necklaces",
-      class: "",
-    },
-    {
-      name: "earrings",
-      label: "Earrings",
-      class: "transform-check",
-    },
-  ];
-
-  const listCheckboxFeatured = [
-    {
-      name: "coco-crush",
-      label: "Coco Crush",
-      class: "",
-    },
-    {
-      name: "camélia",
-      label: "Camélia",
-      class: "transform-check",
-    },
-    {
-      name: "comète",
-      label: "Comète",
-      class: "",
-    },
-    {
-      name: "ruban",
-      label: "Ruban",
-      class: "",
-    },
-    {
-      name: "baroque",
-      label: "Baroque",
-      class: "transform-check",
-    },
-    {
-      name: "soleil-de-artsy",
-      label: "Soleil de Artsy",
-      class: "",
-    },
-  ];
-
-  const listCheckboxMaterial = [
-    {
-      name: "anti-rust",
-      label: "Anti-Rust",
-      class: "",
-    },
-    {
-      name: "mixed",
-      label: "Mixed",
-      class: "transform-check",
-    },
-    {
-      name: "gold",
-      label: "Gold",
-      class: "",
-    },
-    {
-      name: "silver",
-      label: "Silver",
-      class: "",
-    },
-    {
-      name: "metallic",
-      label: "Metallic",
-      class: "transform-check",
-    },
-    {
-      name: "diamond",
-      label: "Diamond",
-      class: "transform-check",
-    },
-  ];
-
-  const listColor = [
-    {
-      name: "one",
-      id: "one",
-    },
-    {
-      name: "two",
-      id: "two",
-    },
-    {
-      name: "three",
-      id: "three",
-    },
-    {
-      name: "four",
-      id: "four",
-    },
-    {
-      name: "five",
-      id: "five",
-    },
-    {
-      name: "six",
-      id: "six",
-    },
-    {
-      name: "seven",
-      id: "seven",
-    },
-    {
-      name: "eight",
-      id: "eight",
-    },
-    {
-      name: "nine",
-      id: "nine",
-    },
-    {
-      name: "ten",
-      id: "ten",
-    },
-    {
-      name: "eleven",
-      id: "eleven",
-    },
-    {
-      name: "twelve",
-      id: "twelve",
-    },
-    {
-      name: "thirteen",
-      id: "thirteen",
-    },
-  ];
-
-  const optionValueSelling = ["Best Selling", "Price"];
-  const optionValueSort = ["Sort", ...optionValueSelling];
-
-  const handleAccordions = (e) => {
-    let target;
-
-    if (!e.target.classList.contains("accordion-header")) {
-      target = e.target.parentElement.nextElementSibling;
-      e.target.parentElement.classList.toggle("active");
-    } else {
-      target = e.target.nextElementSibling;
-      e.target.classList.toggle("active");
-    }
-
-    target.classList.toggle("active");
+  const setParams = (page, perPage = dataLimit) => {
+    const params = new URLSearchParams();
+    params.append("page", page);
+    params.append("perPage", perPage);
+    history.push({ search: params.toString() });
   };
 
-  const handleSidebarMobile = (type) => {
-    const breadcrumbs = document.querySelector(".breadcrumbs");
-    const sidebar = document.querySelector(".sidebar");
-    const collection = document.querySelector(".collection");
-    const footer = document.querySelector("footer");
-
-    if (type === "filter") {
-      sidebar.classList.add("active");
-      breadcrumbs.classList.remove("active");
-      collection.classList.remove("active");
-      footer.classList.remove("active");
-    } else {
-      sidebar.classList.remove("active");
-      breadcrumbs.classList.add("active");
-      collection.classList.add("active");
-      footer.classList.add("active");
+  const fetchPokemonDetail = async (pokemon) => {
+    for (const item of pokemon) {
+      const url = item.url;
+      let result = true;
+      await fetch(url)
+        .then((res) => {
+          if (res.ok) return res.json();
+          throw new Error("Something went wrong!");
+        })
+        .then((res) => {
+          if (res && typeof res === "object") {
+            setPokemon((oldPokemon) => [...oldPokemon, res]);
+          } else {
+            result = false;
+            setEmpty(true);
+          }
+        })
+        .catch((err) => setError(err.message));
+      if (!result) {
+        break;
+      }
     }
   };
 
   const fetchPokemon = async () => {
     setLoading(true);
     await fetch(`${apiUrl}/pokemon?offset=${offset}&limit=${dataLimit}`)
-      .then((res) => res.json())
       .then((res) => {
-        setPokemon([]);
-        setError(false);
-        setTotalPage(Math.ceil(res.count / dataLimit));
-        res.results.forEach((item) => {
-          const url = item.url;
-          fetch(url)
-            .then((res) => res.json())
-            .then((res) => setPokemon((oldPokemon) => [...oldPokemon, res]));
-        });
+        if (res.ok) return res.json();
+        throw new Error("Something went wrong!");
       })
-      .catch((err) => {
-        setError("Something went wrong!");
-      });
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+      .then((res) => {
+        const result = res.results;
+        if (Array.isArray(result) && result.length > 0) {
+          setPokemon([]);
+          setError(false);
+          setTotalData(res.count);
+          setTotalPage(Math.ceil(res.count / dataLimit));
+          fetchPokemonDetail(result);
+        } else {
+          setEmpty(true);
+        }
+      })
+      .catch((err) => setError(err.message));
+    setLoading(false);
   };
 
   useEffect(() => {
     document.title = "Artsy Collective | Product List";
     fetchPokemon();
+  }, [offset]);
+
+  useEffect(() => {
     const notify = () => toast.error(error);
     error && notify();
-  }, [offset, error]);
+  }, [error]);
 
   return (
     <>
-      {error && <ToastContainer position="bottom-right" />}
       <Breadcrumb
         className="product-list-breadcrumbs active"
-        list={listBreadcrumb}
+        list={StaticData.listBreadcrumbs}
       />
       <div className="wrapper list">
         <section className="sidebar">
@@ -309,7 +156,7 @@ export default function ProductList() {
               onClick={handleAccordions}
             >
               <InputCheckbox
-                list={listCheckboxCategory}
+                list={StaticData.listCheckbox.category}
                 classCheckbox="accordion-check"
                 classLabel="t-shadow m-right"
               />
@@ -325,7 +172,7 @@ export default function ProductList() {
               onClick={handleAccordions}
             >
               <InputCheckbox
-                list={listCheckboxFeatured}
+                list={StaticData.listCheckbox.featured}
                 classCheckbox="accordion-check"
                 classLabel="t-shadow m-right"
               />
@@ -340,7 +187,7 @@ export default function ProductList() {
               classParagraph="font-bold"
               onClick={handleAccordions}
             >
-              <InputRange value="234097 Produk" />
+              <InputRange value={`${totalData} Produk`} />
             </Accordion>
             <Accordion
               classWrapper="accordion-sidebar"
@@ -353,7 +200,7 @@ export default function ProductList() {
               onClick={handleAccordions}
             >
               <InputColor
-                list={listColor}
+                list={StaticData.listColor}
                 classColor="color-item"
                 type="checkbox"
               />
@@ -369,7 +216,7 @@ export default function ProductList() {
               onClick={handleAccordions}
             >
               <InputCheckbox
-                list={listCheckboxMaterial}
+                list={StaticData.listCheckbox.material}
                 classCheckbox="accordion-check"
                 classLabel="t-shadow m-right"
               />
@@ -403,13 +250,13 @@ export default function ProductList() {
               <h2 className="font-bold">View All Collections</h2>
               <div className="filter-sort">
                 <p>
-                  234097 Produk |{" "}
+                  {!empty && `${totalData} Produk | `}
                   <span className="font-bold">Urut Berdasarkan</span>
                 </p>
                 <Select
                   className="select-best"
                   value="Best Selling"
-                  list={optionValueSelling}
+                  list={StaticData.optionValue.selling}
                 />
               </div>
             </Element>
@@ -427,45 +274,51 @@ export default function ProductList() {
                 <Select
                   className="select-sort"
                   value="Sort"
-                  list={optionValueSort}
+                  list={StaticData.optionValue.sort}
                 />
               </div>
-              <p className="amount">234097 Produk</p>
+              {!empty && <p className="amount">{totalData} Produk</p>}
             </div>
           </div>
-          {!loading && !error ? (
-            <>
-              <div className="product-collection">
-                {pokemon.map((item, index) => {
-                  return (
-                    <Card
-                      href={`/product-detail/${item.id}`}
-                      title={item.name}
-                      // img={`${apiImg}/${item.id}.png`}
-                      img={item.sprites.front_default}
-                      isDiscount={item.base_experience > 100 && true}
-                      discount={"30% Off"}
-                      isBest={item.base_experience > 100 && true}
-                      label={"Best Pokemon"}
-                      price={item.weight * 1000}
-                      piece={item.height * 1000}
-                      key={index}
-                    />
-                  );
-                })}
-              </div>
-              <Pagination
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                totalPage={totalPage}
-                offset={offset}
-                setOffset={setOffset}
-                dataLimit={dataLimit}
-                pageLimit={pageLimit}
-              />
-            </>
+          {!empty && !error ? (
+            loading ? (
+              <SkeletonLoading amount={dataLimit} paginate={pageNeighbours} />
+            ) : (
+              <>
+                <div className="product-collection">
+                  {pokemon.map((item, index) => {
+                    return (
+                      <Card
+                        href={`/product-detail/${item.id}`}
+                        title={item.name}
+                        img={item.sprites.front_default || DefaultImg}
+                        isDiscount={item.base_experience > 100 && true}
+                        discount={"30% Off"}
+                        isBest={item.base_experience > 100 && true}
+                        label={"Best Pokemon"}
+                        price={item.weight * 1000}
+                        piece={item.height * 1000}
+                        key={index}
+                      />
+                    );
+                  })}
+                </div>
+                <Pagination
+                  currentPage={currentPage}
+                  totalPage={totalPage}
+                  offset={offset}
+                  setOffset={setOffset}
+                  dataLimit={dataLimit}
+                  pageNeighbours={pageNeighbours}
+                  setParams={setParams}
+                />
+              </>
+            )
           ) : (
-            !error && <Loader />
+            <>
+              <ToastContainer position="bottom-right" />
+              <Empty />
+            </>
           )}
         </section>
       </div>

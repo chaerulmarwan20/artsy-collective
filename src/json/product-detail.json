@@ -1,0 +1,14 @@
+{
+  "listColor": [
+    {
+      "name": "color",
+      "id": "gold",
+      "isChecked": true
+    },
+    {
+      "name": "color",
+      "id": "silver",
+      "isChecked": false
+    }
+  ]
+}

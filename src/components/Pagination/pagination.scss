@@ -20,6 +20,9 @@
     border: 1px solid $borderPrimaryColor;
     cursor: pointer;
     margin-right: 12px;
+    &.dots {
+      cursor: unset;
+    }
     &.chevron {
       display: flex;
       border: 1px solid $primaryColor;

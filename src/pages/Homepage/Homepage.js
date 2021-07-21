@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 
 import "./homepage.scss";
 
+import StaticData from "../../json/homepage.json";
+
 import Auth from "../Auth/Auth";
 
 import ButtonLink from "../../components/Button/ButtonLink";
@@ -18,23 +20,19 @@ import ItemLg2 from "../../assets/img/item-lg-2.jpg";
 export default function Homepage() {
   const leafProduct = [
     {
-      href: "#",
-      title: "Leaf Stud Earrings",
+      ...StaticData.leafProduct[0],
       img: Item1,
     },
     {
-      href: "#",
-      title: "Leaf Pendant Bead Necklace",
+      ...StaticData.leafProduct[1],
       img: Item2,
     },
     {
-      href: "#",
-      title: "Leaf Band Ring",
+      ...StaticData.leafProduct[2],
       img: Item3,
     },
     {
-      href: "#",
-      title: "Leaf Bead Bracelet",
+      ...StaticData.leafProduct[3],
       img: Item4,
     },
   ];
@@ -42,17 +40,11 @@ export default function Homepage() {
   const discoverProduct = [
     {
       img: ItemLg1,
-      title: "SUMMER 2021 : THE WEDDING",
-      desc: "Celebrate wedding in style with our elegant and eye-catching Jewel",
-      href: "#",
-      link: "Shop Wedding Collection",
+      ...StaticData.discoverProduct[0],
     },
     {
       img: ItemLg2,
-      title: "LITTLE COLLECTION 2021",
-      desc: "Mini trendsetters Mia and Tatiana step out with our striking pendant and adorable quilted jewel.",
-      href: "#",
-      link: "Shop Little Collection",
+      ...StaticData.discoverProduct[1],
     },
   ];
 

@@ -1,0 +1,34 @@
+{
+  "leafProduct": [
+    {
+      "href": "#",
+      "title": "Leaf Stud Earrings"
+    },
+    {
+      "href": "#",
+      "title": "Leaf Pendant Bead Necklace"
+    },
+    {
+      "href": "#",
+      "title": "Leaf Band Ring"
+    },
+    {
+      "href": "#",
+      "title": "Leaf Bead Bracelet"
+    }
+  ],
+  "discoverProduct": [
+    {
+      "title": "SUMMER 2021 : THE WEDDING",
+      "desc": "Celebrate wedding in style with our elegant and eye-catching Jewel",
+      "href": "#",
+      "link": "Shop Wedding Collection"
+    },
+    {
+      "title": "LITTLE COLLECTION 2021",
+      "desc": "Mini trendsetters Mia and Tatiana step out with our striking pendant and adorable quilted jewel.",
+      "href": "#",
+      "link": "Shop Little Collection"
+    }
+  ]
+}

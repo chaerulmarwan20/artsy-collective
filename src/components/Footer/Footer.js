@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 
 import "./footer.scss";
 
-import ListMenu from "../ListMenu";
+import StaticData from "../../json/footer.json";
+
+import ListMenu from "../ListMenu/ListMenu";
 
 import Message from "../../assets/icon/message.svg";
 import Chat from "../../assets/icon/chat.svg";
@@ -17,188 +19,49 @@ import Jcb from "../../assets/img/jcb.png";
 import Paypal from "../../assets/img/paypal.png";
 
 export default function Footer() {
-  const exploreMenu = [
-    {
-      href: "#",
-      title: "Collections",
-    },
-    {
-      href: "#",
-      title: "Coco Crush",
-    },
-    {
-      href: "#",
-      title: "High Jewelry",
-    },
-    {
-      href: "#",
-      title: "Bridal",
-    },
-    {
-      href: "#",
-      title: "Care & Services",
-    },
-  ];
-
-  const storeMenu = [
-    {
-      href: "#",
-      title: "Store Locator",
-    },
-    {
-      href: "#",
-      title: "Book Appointment",
-    },
-  ];
-
-  const helpMenu = [
-    {
-      href: "#",
-      title: "Help Center",
-    },
-    {
-      href: "#",
-      title: "FAQ",
-    },
-  ];
-
-  const aboutMenu = [
-    {
-      href: "#",
-      title: "Artsy Collective Story",
-    },
-    {
-      href: "#",
-      title: "Sustainability",
-    },
-    {
-      href: "#",
-      title: "Join Us",
-    },
-  ];
-
-  const arrMenu = [
-    {
-      menu: exploreMenu,
-      heading: "Explore Artsy Collective",
-    },
-    {
-      menu: storeMenu,
-      heading: "Our Store",
-    },
-    {
-      menu: helpMenu,
-      heading: "Help",
-    },
-    {
-      menu: aboutMenu,
-      heading: "About Us",
-    },
-  ];
-
   const listContact = [
     {
-      href: "#",
+      ...StaticData.listContact[0],
       img: Message,
-      title: "Text",
     },
     {
-      href: "#",
+      ...StaticData.listContact[1],
       img: Chat,
-      title: "Chat",
     },
     {
-      href: "#",
+      ...StaticData.listContact[2],
       img: Mail,
-      title: "Email",
     },
     {
-      href: "#",
+      ...StaticData.listContact[3],
       img: Phone,
-      title: "Call",
-    },
-  ];
-
-  const arrCountry = [
-    {
-      href: "#",
-      title: "Indonesia",
-    },
-    {
-      href: "#",
-      title: "France",
-    },
-    {
-      href: "#",
-      title: "United Kingdom",
-    },
-    {
-      href: "#",
-      title: "United States",
-    },
-    {
-      href: "#",
-      title: "Germany",
-    },
-    {
-      href: "#",
-      title: "Spain",
-    },
-    {
-      href: "#",
-      title: "Italy",
-    },
-  ];
-
-  const arrLocation = [
-    {
-      href: "#",
-      title: "Legal Information",
-    },
-    {
-      href: "#",
-      title: "Terms",
-    },
-    {
-      href: "#",
-      title: "Privacy Policy & Cookies",
-    },
-    {
-      href: "#",
-      title: "Affiliation",
     },
   ];
 
   const arrSponsor = [
     {
-      href: "#",
+      ...StaticData.arrSponsor[0],
       img: Visa,
-      title: "Visa",
     },
     {
-      href: "#",
+      ...StaticData.arrSponsor[1],
       img: Cirrus,
-      title: "Cirrus",
     },
     {
-      href: "#",
+      ...StaticData.arrSponsor[2],
       img: MasterCard,
-      title: "Master Card",
     },
     {
-      href: "#",
+      ...StaticData.arrSponsor[3],
       img: AmericanExpress,
-      title: "American Express",
     },
     {
-      href: "#",
+      ...StaticData.arrSponsor[4],
       img: Jcb,
-      title: "JCB",
     },
     {
-      href: "#",
+      ...StaticData.arrSponsor[5],
       img: Paypal,
-      title: "Paypal",
     },
   ];
 
@@ -217,7 +80,7 @@ export default function Footer() {
           </div>
           <div className="service">
             <div className="menu">
-              {arrMenu.map((item, index) => {
+              {StaticData.arrMenu.map((item, index) => {
                 return (
                   <ListMenu
                     list={item.menu}
@@ -275,7 +138,10 @@ export default function Footer() {
             <p>
               <span>Indonesia</span> - Rp (Rupiah)
             </p>
-            <ListMenu list={arrLocation} classItem="hover-opacity-primary" />
+            <ListMenu
+              list={StaticData.arrLocation}
+              classItem="hover-opacity-primary"
+            />
           </div>
         </div>
       </div>
@@ -284,7 +150,7 @@ export default function Footer() {
           <div className="country">
             <p className="footer-text">©2021 Artsy Collective</p>
             <ListMenu
-              list={arrCountry}
+              list={StaticData.arrCountry}
               classItem="footer-text hover-color-primary"
             />
           </div>

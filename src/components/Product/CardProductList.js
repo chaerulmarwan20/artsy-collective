@@ -4,7 +4,7 @@ import propTypes from "prop-types";
 
 import "./product.scss";
 
-import Rupiah from "../../helpers/Rupiah";
+import Rupiah from "../../utils/Rupiah";
 
 export default function CardProductList(props) {
   return (

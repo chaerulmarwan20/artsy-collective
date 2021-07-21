@@ -1,0 +1,164 @@
+{
+  "arrMenu": [
+    {
+      "menu": [
+        {
+          "href": "#",
+          "title": "Collections"
+        },
+        {
+          "href": "#",
+          "title": "Coco Crush"
+        },
+        {
+          "href": "#",
+          "title": "High Jewelry"
+        },
+        {
+          "href": "#",
+          "title": "Bridal"
+        },
+        {
+          "href": "#",
+          "title": "Care & Services"
+        }
+      ],
+      "heading": "Explore Artsy Collective"
+    },
+    {
+      "menu": [
+        {
+          "href": "#",
+          "title": "Store Locator"
+        },
+        {
+          "href": "#",
+          "title": "Book Appointment"
+        }
+      ],
+      "heading": "Our Store"
+    },
+    {
+      "menu": [
+        {
+          "href": "#",
+          "title": "Help Center"
+        },
+        {
+          "href": "#",
+          "title": "FAQ"
+        }
+      ],
+      "heading": "Help"
+    },
+    {
+      "menu": [
+        {
+          "href": "#",
+          "title": "Artsy Collective Story"
+        },
+        {
+          "href": "#",
+          "title": "Sustainability"
+        },
+        {
+          "href": "#",
+          "title": "Join Us"
+        }
+      ],
+      "heading": "About Us"
+    }
+  ],
+  "arrCountry": [
+    {
+      "href": "#",
+      "title": "Indonesia"
+    },
+    {
+      "href": "#",
+      "title": "France"
+    },
+    {
+      "href": "#",
+      "title": "United Kingdom"
+    },
+    {
+      "href": "#",
+      "title": "United States"
+    },
+    {
+      "href": "#",
+      "title": "Germany"
+    },
+    {
+      "href": "#",
+      "title": "Spain"
+    },
+    {
+      "href": "#",
+      "title": "Italy"
+    }
+  ],
+  "arrLocation": [
+    {
+      "href": "#",
+      "title": "Legal Information"
+    },
+    {
+      "href": "#",
+      "title": "Terms"
+    },
+    {
+      "href": "#",
+      "title": "Privacy Policy & Cookies"
+    },
+    {
+      "href": "#",
+      "title": "Affiliation"
+    }
+  ],
+  "arrSponsor": [
+    {
+      "href": "#",
+      "title": "Visa"
+    },
+    {
+      "href": "#",
+      "title": "Cirrus"
+    },
+    {
+      "href": "#",
+      "title": "Master Card"
+    },
+    {
+      "href": "#",
+      "title": "American Express"
+    },
+    {
+      "href": "#",
+      "title": "JCB"
+    },
+    {
+      "href": "#",
+      "title": "Paypal"
+    }
+  ],
+  "listContact": [
+    {
+      "href": "#",
+      "title": "Text"
+    },
+    {
+      "href": "#",
+      "title": "Chat"
+    },
+    {
+      "href": "#",
+      "title": "Email"
+    },
+    {
+      "href": "#",
+      "title": "Call"
+    }
+  ]
+}

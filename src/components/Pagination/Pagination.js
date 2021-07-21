@@ -10,67 +10,62 @@ import ChevronRight from "../../assets/icon/chevron-right.svg";
 
 export default function Pagination({
   currentPage,
-  setCurrentPage,
   totalPage,
   offset,
   setOffset,
   dataLimit,
-  pageLimit,
+  pageNeighbours,
+  setParams,
 }) {
   const [pageNumber, setPageNumber] = useState([]);
 
-  const scroller = Scroll.scroller;
-
-  const previous = () => {
-    setOffset(offset <= 0 ? 0 : offset - dataLimit);
-    setCurrentPage(currentPage <= 1 ? 1 : currentPage - 1);
-    scroller.scrollTo("filter-header", {
+  const scrollTop = () => {
+    const scroller = Scroll.scroller;
+    return scroller.scrollTo("filter-header", {
       duration: 1800,
       delay: 100,
       smooth: true,
     });
   };
 
+  const previous = () => {
+    setOffset(offset <= 0 ? 0 : offset - dataLimit);
+    setParams(currentPage <= 1 ? 1 : currentPage - 1);
+    scrollTop();
+  };
+
   const next = () => {
     setOffset(currentPage === totalPage ? offset : offset + dataLimit);
-    setCurrentPage(currentPage === totalPage ? totalPage : currentPage + 1);
-    scroller.scrollTo("filter-header", {
-      duration: 1800,
-      delay: 100,
-      smooth: true,
-    });
+    setParams(currentPage === totalPage ? totalPage : currentPage + 1);
+    scrollTop();
   };
 
   const changePage = (e) => {
     const number = Number(e.target.textContent);
     setOffset(number * dataLimit - dataLimit);
-    setCurrentPage(number);
-    scroller.scrollTo("filter-header", {
-      duration: 1800,
-      delay: 100,
-      smooth: true,
-    });
+    setParams(number);
+    scrollTop();
   };
 
   const getPageNumber = () => {
     const arrNumber = Array.from(Array(totalPage).keys()).map(
       (item) => item + 1
     );
+    const formula = pageNeighbours * 2 + 3 - 2;
     const startIndex =
       currentPage === totalPage
-        ? currentPage - pageLimit
-        : currentPage >= pageLimit && pageLimit % 2 !== 0
-        ? currentPage - pageLimit + Math.floor(pageLimit / 2)
-        : pageLimit % 2 === 0 && currentPage >= pageLimit
-        ? currentPage - pageLimit + 1
+        ? currentPage - formula
+        : currentPage >= formula
+        ? currentPage - formula + pageNeighbours
         : 0;
-    const endIndex = startIndex + pageLimit;
+    const endIndex = startIndex + formula;
+    console.log(startIndex, endIndex);
     setPageNumber(arrNumber.slice(startIndex, endIndex));
   };
 
   useEffect(() => {
     getPageNumber();
-  }, [currentPage]);
+  }, []);
 
   return (
     <nav className="pagination">
@@ -80,24 +75,63 @@ export default function Pagination({
             <img src={ChevronLeft} className="img-block" alt="Chevron Left" />
           </Link>
         </li>
+        <li
+          className={`hover-opacity-primary ${currentPage === 1 && "active"}`}
+          onClick={changePage}
+        >
+          <Link
+            to="#"
+            className={`font-medium ${currentPage === 1 && "active"}`}
+          >
+            1
+          </Link>
+        </li>
+        {currentPage > pageNeighbours * 2 + 3 - 2 && (
+          <li className="dots">
+            <p>...</p>
+          </li>
+        )}
         {pageNumber.map((item, index) => {
           return (
-            <li
-              className={`hover-opacity-primary ${
-                currentPage === item && "active"
-              }`}
-              onClick={changePage}
-              key={index}
-            >
-              <Link
-                to="#"
-                className={`font-medium ${currentPage === item && "active"}`}
+            item !== 1 &&
+            item !== totalPage && (
+              <li
+                className={`hover-opacity-primary ${
+                  currentPage === item && "active"
+                }`}
+                onClick={changePage}
+                key={index}
               >
-                {item}
-              </Link>
-            </li>
+                <Link
+                  to="#"
+                  className={`font-medium ${currentPage === item && "active"}`}
+                >
+                  {item}
+                </Link>
+              </li>
+            )
           );
         })}
+        {currentPage < totalPage - (pageNeighbours + 1) && (
+          <li className="dots">
+            <p>...</p>
+          </li>
+        )}
+        {totalPage > 1 && (
+          <li
+            className={`hover-opacity-primary ${
+              currentPage === totalPage && "active"
+            }`}
+            onClick={changePage}
+          >
+            <Link
+              to="#"
+              className={`font-medium ${currentPage === totalPage && "active"}`}
+            >
+              {totalPage}
+            </Link>
+          </li>
+        )}
         <li className="chevron hover-opacity-primary" onClick={next}>
           <Link to="#" className="font-medium">
             <img src={ChevronRight} className="img-block" alt="Chevron Right" />
@@ -110,10 +144,10 @@ export default function Pagination({
 
 Pagination.propTypes = {
   currentPage: propTypes.number,
-  setCurrentPage: propTypes.func,
   totalPage: propTypes.number,
   offset: propTypes.number,
   setOffset: propTypes.func,
   dataLimit: propTypes.number,
-  pageLimit: propTypes.number,
+  pageNeighbours: propTypes.number,
+  setParams: propTypes.func,
 };

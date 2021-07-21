@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 
 import "./header.scss";
 
-import ListMenu from "../ListMenu";
+import StaticData from "../../json/header.json";
+
+import { handleHeader, handleLinks, handleMenuMobile } from "./helpers";
+
+import ListMenu from "../ListMenu/ListMenu";
 import Button from "../Button/Button";
 import ButtonClose from "../Button/ButtonClose";
 import Card from "../Product/CardProductHome";
@@ -21,174 +25,43 @@ import ProductSm4 from "../../assets/img/product-sm-4.png";
 import ProductSm5 from "../../assets/img/product-sm-5.png";
 
 export default function Header() {
-  const navbarMenu = [
-    {
-      href: "#",
-      title: "Collections",
-    },
-    {
-      href: "#",
-      title: "Coco Crush",
-    },
-    {
-      href: "#",
-      title: "High Jewelry",
-    },
-    {
-      href: "#",
-      title: "Bridal",
-    },
-    {
-      href: "#",
-      title: "Care & Services",
-    },
-    {
-      href: "/todo",
-      title: "To Do",
-    },
-  ];
-
-  const categoriesMenu = [
-    {
-      href: "#",
-      title: "View All",
-    },
-    {
-      href: "#",
-      title: "Rings",
-    },
-    {
-      href: "#",
-      title: "Bracelets",
-    },
-    {
-      href: "#",
-      title: "Necklaces",
-    },
-    {
-      href: "#",
-      title: "Earrings",
-    },
-  ];
-
-  const featuredMenu = [
-    {
-      href: "#",
-      title: "Coco Crush",
-    },
-    {
-      href: "#",
-      title: "Camélia",
-    },
-    {
-      href: "#",
-      title: "Ultra",
-    },
-    {
-      href: "#",
-      title: "Comète",
-    },
-    {
-      href: "#",
-      title: "Ruban",
-    },
-    {
-      href: "#",
-      title: "Baroque",
-    },
-    {
-      href: "#",
-      title: "Soleil de Artsy",
-    },
-  ];
-
   const productMenu = [
     {
-      href: "#",
-      title: "Coco Crush Ring",
+      ...StaticData.productMenu[0],
       img: ProductLg1,
     },
     {
-      href: "#",
-      title: "Camélia Bracelet",
+      ...StaticData.productMenu[1],
       img: ProductLg2,
     },
     {
-      href: "#",
-      title: "Ruban Collection",
+      ...StaticData.productMenu[2],
       img: ProductLg3,
     },
   ];
 
   const navbarMenuMobile = [
     {
-      href: "#",
-      title: "Collections",
-      desc: "All Artsy’s fine jewelry",
+      ...StaticData.navbarMenuMobile[0],
       img: ProductSm1,
     },
     {
-      href: "#",
-      title: "Coco Crush",
-      desc: "Special Coco Crush’s Edition",
+      ...StaticData.navbarMenuMobile[1],
       img: ProductSm2,
     },
     {
-      href: "#",
-      title: "High Jewelry",
-      desc: "Artsy high jewelry signature",
+      ...StaticData.navbarMenuMobile[2],
       img: ProductSm3,
     },
     {
-      href: "#",
-      title: "Bridal",
-      desc: "Wedding, Engagement Rings",
+      ...StaticData.navbarMenuMobile[3],
       img: ProductSm4,
     },
     {
-      href: "#",
-      title: "Care & Services",
-      desc: "Book an Appoinment",
+      ...StaticData.navbarMenuMobile[4],
       img: ProductSm5,
     },
   ];
-
-  const handleHeader = () => {
-    const heading = document.querySelector("header");
-    const collesctionsMenu = document.querySelector(".collections-menu");
-    heading.classList.remove("active");
-    collesctionsMenu.classList.remove("active");
-  };
-
-  const handleLinks = (e) => {
-    const collectionsMenu = document.querySelector(".collections-menu");
-    if (e.target.classList.contains("collections")) {
-      collectionsMenu.classList.add("active");
-    } else {
-      collectionsMenu.classList.remove("active");
-    }
-  };
-
-  const handleMenuMobile = (type) => {
-    const hamburgerMenu = document.querySelector(".hamburger-menu");
-    const navbarExpand = document.querySelector(".navbar-expand");
-    const icon = document.querySelector(".icon");
-    const close = document.querySelector(".close");
-
-    if (type === "hamburger") {
-      hamburgerMenu.classList.add("scale");
-      navbarExpand.classList.add("slide");
-      icon.classList.add("scale");
-      close.classList.add("scale");
-      document.body.classList.add("overflow-navbar");
-    } else {
-      close.classList.remove("scale");
-      hamburgerMenu.classList.remove("scale");
-      navbarExpand.classList.remove("slide");
-      icon.classList.remove("scale");
-      document.body.classList.remove("overflow-navbar");
-    }
-  };
 
   return (
     <header className="wrapper" onMouseLeave={handleHeader}>
@@ -211,7 +84,7 @@ export default function Header() {
         </div>
         <ListMenu
           classMenu="navbar-menu"
-          list={navbarMenu}
+          list={StaticData.navbarMenu}
           onMouseOver={handleLinks}
           isNavbar
         />
@@ -236,11 +109,17 @@ export default function Header() {
       <div className="collections-menu">
         <div className="categories">
           <h2 className="font-bold">Shop By Categories</h2>
-          <ListMenu list={categoriesMenu} classItem="hover-color-primary" />
+          <ListMenu
+            list={StaticData.categoriesMenu}
+            classItem="hover-color-primary"
+          />
         </div>
         <div className="features">
           <h2 className="font-bold">Featured Collections</h2>
-          <ListMenu list={featuredMenu} classItem="hover-color-primary" />
+          <ListMenu
+            list={StaticData.featuredMenu}
+            classItem="hover-color-primary"
+          />
         </div>
         <div className="products">
           {productMenu.map((item, index) => {

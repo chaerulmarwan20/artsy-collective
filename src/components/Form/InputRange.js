@@ -3,7 +3,7 @@ import propTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 
-import Rupiah from "../../helpers/Rupiah";
+import Rupiah from "../../utils/Rupiah";
 
 const RangeSlider = withStyles({
   root: {

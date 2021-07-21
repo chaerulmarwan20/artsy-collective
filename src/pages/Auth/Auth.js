@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 
 import "./auth.scss";
 
+import StaticData from "../../json/auth.json";
+import { handleTypePassword, handleAuth, handleWindow } from "./helpers";
+
 import Input from "../../components/Form/Input";
 import InputPassword from "../../components/Form/InputPassword";
 import InputDate from "../../components/Form/InputDate";
@@ -13,109 +16,6 @@ import ButtonClose from "../../components/Button/ButtonClose";
 import Modal from "../../components/Modal/Modal";
 
 export default function Auth() {
-  const listRadio = [
-    {
-      id: "female",
-      label: "Female",
-      isChecked: true,
-    },
-    {
-      id: "male",
-      label: "Male",
-      isChecked: false,
-    },
-  ];
-
-  const listCheckbox = [
-    {
-      name: "arrival",
-      class: "arrival-label",
-      label: "Send me Artsy Collective new arrival updates, offers, and more.",
-    },
-    {
-      name: "terms",
-      class: "terms-label",
-      label:
-        "I agree to Artsy Collective <a href='#' class='hover-color-primary'title='Terms & Conditions'>Terms & Conditions </a> and <a href='#' class='hover-color-primary' title='Privacy Policy'>Privacy Policy.</a>",
-    },
-  ];
-
-  const listInput = [
-    {
-      name: "firstName",
-      label: "FirstName",
-      type: "text",
-      placeholder: "ex: john",
-      small: "",
-    },
-    {
-      name: "lastName",
-      label: "Last Name",
-      type: "text",
-      placeholder: "ex: doe",
-      small: "",
-    },
-  ];
-
-  const handleTypePassword = (type) => {
-    const passLogin = document.querySelector(".password-login");
-    const passRegister = document.querySelector(".password-register");
-    const passConfirmRegister = document.querySelector(
-      ".confirm-password-register"
-    );
-
-    if (type === "loginPass") {
-      passLogin.type === "password"
-        ? (passLogin.type = "text")
-        : (passLogin.type = "password");
-    } else if (type === "registerPass") {
-      passRegister.type === "password"
-        ? (passRegister.type = "text")
-        : (passRegister.type = "password");
-    } else {
-      passConfirmRegister.type === "password"
-        ? (passConfirmRegister.type = "text")
-        : (passConfirmRegister.type = "password");
-    }
-  };
-
-  const handleAuth = (type) => {
-    const login = document.querySelector(".login");
-    const register = document.querySelector(".register");
-
-    if (type === "login") {
-      register.classList.remove("active");
-      login.classList.add("active");
-    } else {
-      login.classList.remove("active");
-      register.classList.add("active");
-    }
-  };
-
-  const handleWindow = () => {
-    const header = document.querySelector("header");
-    const footer = document.querySelector("footer");
-    const homepage = document.querySelector(".homepage");
-    const auth = document.querySelector(".auth");
-
-    const btnCloseLogin = document.getElementById("btnCloseLogin");
-    const btnCloseRegister = document.getElementById("btnCloseRegister");
-
-    window.addEventListener("click", (e) => {
-      if (
-        e.target === btnCloseLogin ||
-        e.target === btnCloseRegister ||
-        e.target === auth
-      ) {
-        auth.style.display = "none";
-        header.style.display = "block";
-        homepage.style.display = "block";
-        footer.style.display = "block";
-        document.body.classList.remove("overflow-modal");
-      }
-    });
-  };
-
   useEffect(() => {
     document.body.classList.add("overflow-modal");
 
@@ -187,7 +87,7 @@ export default function Auth() {
           <div className="register-body">
             <p>Save your information to check out faster</p>
             <form className="form-wrapper form-register">
-              <Input classForm="form-row" list={listInput} isRow />
+              <Input classForm="form-row" list={StaticData.listInput} isRow />
               <Input
                 name="email-register"
                 label="Email / Username"
@@ -203,7 +103,7 @@ export default function Auth() {
               <InputDate name="birthday" label="Date of Birth" />
               <InputRadio
                 classForm="form-radio"
-                list={listRadio}
+                list={StaticData.listRadio}
                 classRadio="form-item-radio"
                 name="gender"
                 classLabel="radio-label"
@@ -225,7 +125,7 @@ export default function Auth() {
                 onClick={() => handleTypePassword("registerConfirm")}
               />
               <InputCheckbox
-                list={listCheckbox}
+                list={StaticData.listCheckbox}
                 classCheckbox="form-check"
                 classLabel="label-check-auth"
                 isAuth
