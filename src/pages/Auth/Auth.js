@@ -67,8 +67,8 @@ export default function Auth() {
     contactNumber: Yup.string()
       .trim()
       .required("Required")
-      .matches(/^\d+$/, "Invalid number")
-      .min(10, "Too short"),
+      .min(10, "Too short")
+      .matches(/^(^\+62|62|^08)(\d{3,4}-?){2}\d{3,4}$/g, "Invalid number"),
     birthday: Yup.date().required("Required").max(new Date(), "Invalid date"),
     gender: Yup.string().required("Required"),
     password: Yup.string()
@@ -252,7 +252,7 @@ export default function Auth() {
                 name="contactNumber"
                 label="Contact Number"
                 type="text"
-                placeholder="ex: 0812 3456 7890"
+                placeholder="ex: +62812 3456 7890"
                 classInput={`${
                   errors.contactNumber && touched.contactNumber && "error"
                 }`}
