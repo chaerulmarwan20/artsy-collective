@@ -11,23 +11,20 @@ export default function InputCheckbox(props) {
   classLabel.push(props.classLabel);
 
   return props.isAuth ? (
-    <div className={classForm.join(" ")}>
-      {props.list.map((item, index) => {
-        return (
-          <div className={props.classCheckbox} key={index}>
-            <input
-              type="checkbox"
-              className={classInput.join(" ")}
-              name={item.name}
-              id={item.name}
-            />
-            <label htmlFor={item.name} className={classLabel.join(" ")}></label>
-            <label htmlFor={item.name} className={item.class}>
-              {parse(item.label)}
-            </label>
-          </div>
-        );
-      })}
+    <div className={props.classCheckbox}>
+      <input
+        type="checkbox"
+        className={classInput.join(" ")}
+        onChange={props.onChange}
+        value={props.value}
+        name={props.name}
+        id={props.name}
+        checked={props.isChecked}
+      />
+      <label htmlFor={props.name} className={classLabel.join(" ")}></label>
+      <label htmlFor={props.name} className={props.classDesc}>
+        {parse(props.label)}
+      </label>
     </div>
   ) : (
     props.list.map((item, index) => {
@@ -53,11 +50,15 @@ export default function InputCheckbox(props) {
 
 InputCheckbox.propTypes = {
   onChange: propTypes.func,
+  onBlur: propTypes.func,
   classForm: propTypes.string,
   classCheckbox: propTypes.string,
   classInput: propTypes.string,
   classLabel: propTypes.string,
+  classDesc: propTypes.string,
   list: propTypes.array,
+  label: propTypes.string,
   name: propTypes.string,
   isAuth: propTypes.bool,
+  isChecked: propTypes.bool,
 };

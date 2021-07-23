@@ -5,6 +5,25 @@ export default function InputRadio(props) {
   const className = ["form-group"];
   className.push(props.classForm);
 
+  if (props.isSingle) {
+    return (
+      <div className={props.classRadio}>
+        <input
+          type="radio"
+          name={props.name}
+          id={props.id}
+          value={props.value}
+          className={props.classInput}
+          onChange={props.onChange}
+          checked={props.isChecked}
+        />
+        <label htmlFor={props.id} className={props.classLabel}>
+          {props.label}
+        </label>
+      </div>
+    );
+  }
+
   return (
     <div className={className.join(" ")}>
       {props.list.map((item, index) => {
@@ -35,4 +54,9 @@ InputRadio.propTypes = {
   classLabel: propTypes.string,
   list: propTypes.array,
   name: propTypes.string,
+  id: propTypes.string,
+  label: propTypes.string,
+  value: propTypes.string,
+  isSingle: propTypes.bool,
+  isChecked: propTypes.bool,
 };

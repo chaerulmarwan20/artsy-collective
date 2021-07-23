@@ -14,18 +14,23 @@ export default function InputDate(props) {
           name={props.name}
           id={props.name}
           className={props.classInput}
+          value={props.value}
+          onChange={props.onChange}
+          onBlur={props.onBlur}
         />
       </div>
-      <small>{props.small}</small>
+      {props.error && <small>{props.error}</small>}
     </div>
   );
 }
 
 InputDate.propTypes = {
   onChange: propTypes.func,
+  onBlur: propTypes.func,
+  value: propTypes.string,
   classForm: propTypes.string,
   classInput: propTypes.string,
   name: propTypes.string,
   label: propTypes.string,
-  small: propTypes.string,
+  error: propTypes.string,
 };

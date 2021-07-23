@@ -52,6 +52,11 @@
                 border: 5px solid $primaryColor;
               }
             }
+            + .radio-label.error {
+              &::before {
+                border: 5px solid $borderFourthlyColor;
+              }
+            }
           }
           &:focus {
             + .radio-label {
@@ -76,6 +81,10 @@
     display: inline-block;
     @include typography(14px, 16px);
     margin-bottom: 12px;
+    margin-right: auto;
+    &.error {
+      color: $borderFourthlyColor;
+    }
   }
   input {
     width: 100%;
@@ -99,7 +108,6 @@
     }
     &[type="date"] {
       padding-left: 61px;
-      color: $textTertiaryColor;
       &::-webkit-calendar-picker-indicator {
         background: url(../../assets/img/calendar.png) no-repeat;
         background-size: 16px;
@@ -111,12 +119,12 @@
       }
     }
   }
-  small {
-    display: none;
-    margin-top: 12px;
-    @include typography(12px, 14px, $borderFourthlyColor);
-    white-space: nowrap;
-  }
+}
+small {
+  display: block;
+  margin-top: 12px;
+  @include typography(12px, 14px, $borderFourthlyColor);
+  white-space: nowrap;
 }
 .custom-check {
   width: unset;

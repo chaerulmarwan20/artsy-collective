@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import * as Scroll from "react-scroll";
 import queryString from "query-string";
@@ -31,8 +31,6 @@ export default function ProductList() {
   const apiUrl = process.env.REACT_APP_API;
   const Element = Scroll.Element;
 
-  const history = useHistory();
-
   const parsed = queryString.parse(useLocation().search, {
     parseNumbers: true,
   });
@@ -43,21 +41,14 @@ export default function ProductList() {
   const dataLimit =
     queryDataLimit > 0 && queryDataLimit <= 12 ? queryDataLimit : 12;
   const pageNeighbours = 1;
+  const offset = (currentPage - 1) * dataLimit;
 
   const [pokemon, setPokemon] = useState([]);
-  const [offset, setOffset] = useState(currentPage * dataLimit - dataLimit);
   const [totalData, setTotalData] = useState(null);
   const [totalPage, setTotalPage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [empty, setEmpty] = useState(false);
   const [error, setError] = useState(false);
-
-  const setParams = (page, perPage = dataLimit) => {
-    const params = new URLSearchParams();
-    params.append("page", page);
-    params.append("perPage", perPage);
-    history.push({ search: params.toString() });
-  };
 
   const fetchPokemonDetail = async (pokemon) => {
     for (const item of pokemon) {
@@ -187,7 +178,7 @@ export default function ProductList() {
               classParagraph="font-bold"
               onClick={handleAccordions}
             >
-              <InputRange value={`${totalData} Produk`} />
+              <InputRange value={`${totalData || 0} Produk`} />
             </Accordion>
             <Accordion
               classWrapper="accordion-sidebar"
@@ -250,7 +241,7 @@ export default function ProductList() {
               <h2 className="font-bold">View All Collections</h2>
               <div className="filter-sort">
                 <p>
-                  {!empty && `${totalData} Produk | `}
+                  {!empty && `${totalData || 0} Produk | `}
                   <span className="font-bold">Urut Berdasarkan</span>
                 </p>
                 <Select
@@ -277,7 +268,7 @@ export default function ProductList() {
                   list={StaticData.optionValue.sort}
                 />
               </div>
-              {!empty && <p className="amount">{totalData} Produk</p>}
+              {!empty && <p className="amount">{totalData || 0} Produk</p>}
             </div>
           </div>
           {!empty && !error ? (
@@ -306,11 +297,8 @@ export default function ProductList() {
                 <Pagination
                   currentPage={currentPage}
                   totalPage={totalPage}
-                  offset={offset}
-                  setOffset={setOffset}
                   dataLimit={dataLimit}
                   pageNeighbours={pageNeighbours}
-                  setParams={setParams}
                 />
               </>
             )

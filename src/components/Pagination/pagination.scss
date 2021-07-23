@@ -34,6 +34,11 @@
     a {
       @include typography(16px, 19px, $textFifthlyColor);
       text-decoration: none;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       &.active {
         color: $bgColor;
       }

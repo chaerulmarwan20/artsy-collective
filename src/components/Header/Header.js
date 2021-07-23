@@ -89,7 +89,11 @@ export default function Header() {
           isNavbar
         />
         <div className="icon">
-          <Link to="#" className="hover-opacity-primary" title="Your Account">
+          <Link
+            to="/account/signin"
+            className="hover-opacity-primary"
+            title="Your Account"
+          >
             <img src={User} className="img-block" alt="User" />
           </Link>
           <Link

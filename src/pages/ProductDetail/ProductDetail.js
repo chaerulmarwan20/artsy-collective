@@ -132,7 +132,12 @@ export default function ProductDetail() {
 
   return (
     <>
-      {!empty && !error ? (
+      {empty || error ? (
+        <>
+          <ToastContainer position="bottom-right" />
+          <Empty isDetail />
+        </>
+      ) : (
         <>
           <Breadcrumb
             className="product-detail-breadcrumbs"
@@ -344,11 +349,6 @@ export default function ProductDetail() {
               </div>
             </div>
           </Modal>
-        </>
-      ) : (
-        <>
-          <ToastContainer position="bottom-right" />
-          <Empty isDetail />
         </>
       )}
     </>

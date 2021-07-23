@@ -20,19 +20,6 @@ const handleTypePassword = (type) => {
   }
 };
 
-const handleAuth = (type) => {
-  const login = document.querySelector(".login");
-  const register = document.querySelector(".register");
-
-  if (type === "login") {
-    register.classList.remove("active");
-    login.classList.add("active");
-  } else {
-    login.classList.remove("active");
-    register.classList.add("active");
-  }
-};
-
 const handleWindow = () => {
   const header = document.querySelector("header");
   const footer = document.querySelector("footer");
@@ -57,4 +44,4 @@ const handleWindow = () => {
   });
 };
 
-export { handleTypePassword, handleAuth, handleWindow };
+export { handleTypePassword, handleWindow };

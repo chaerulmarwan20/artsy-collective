@@ -9,13 +9,16 @@ export default function InputPassword(props) {
 
   return (
     <div className={className.join(" ")}>
-      <label htmlFor={props.name}>{props.label}</label>
+      <label htmlFor={props.id || props.name}>{props.label}</label>
       <div className="input-password">
         <input
           type="password"
           name={props.name}
-          id={props.name}
+          id={props.id || props.name}
           placeholder={props.placeholder}
+          value={props.value}
+          onChange={props.onChange}
+          onBlur={props.onBlur}
           className={props.classInput}
         />
         <button
@@ -26,13 +29,14 @@ export default function InputPassword(props) {
           <img src={EyeOff} alt="Eye Off" />
         </button>
       </div>
-      <small>{props.small}</small>
+      {props.error && <small>{props.error}</small>}
     </div>
   );
 }
 
 InputPassword.propTypes = {
   onChange: propTypes.func,
+  onBlur: propTypes.func,
   onClick: propTypes.func,
   classForm: propTypes.string,
   classInput: propTypes.string,
@@ -40,5 +44,6 @@ InputPassword.propTypes = {
   name: propTypes.string,
   label: propTypes.string,
   placeholder: propTypes.string,
-  small: propTypes.string,
+  value: propTypes.string,
+  error: propTypes.string,
 };

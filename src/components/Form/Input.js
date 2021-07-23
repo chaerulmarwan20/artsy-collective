@@ -28,56 +28,60 @@ export default function Input(props) {
         ref={inputRef}
       />
     );
+  } else if (props.isRow) {
+    return (
+      <div className="form-item">
+        <label htmlFor={props.name}>{props.label}</label>
+        <input
+          type={props.type}
+          name={props.name}
+          id={props.name}
+          placeholder={props.placeholder}
+          value={props.value}
+          className={props.classInput}
+          onChange={props.onChange}
+          onBlur={props.onBlur}
+        />
+        {props.error && <small>{props.error}</small>}
+      </div>
+    );
   }
 
   return (
     <div className={className.join(" ")}>
-      {props.isRow ? (
-        props.list.map((item, index) => {
-          return (
-            <div className="form-item" key={index}>
-              <label htmlFor={item.name}>{item.label}</label>
-              <input
-                type={item.type}
-                name={item.name}
-                id={item.name}
-                placeholder={item.placeholder}
-              />
-              <small>{item.small}</small>
-            </div>
-          );
-        })
-      ) : (
-        <>
-          <label htmlFor={props.name}>{props.label}</label>
-          <input
-            type={props.type}
-            name={props.name}
-            id={props.name}
-            placeholder={props.placeholder}
-            className={props.classInput}
-          />
-          <small>{props.small}</small>
-        </>
-      )}
+      <>
+        <label htmlFor={props.id || props.name}>{props.label}</label>
+        <input
+          type={props.type}
+          name={props.name}
+          id={props.id || props.name}
+          placeholder={props.placeholder}
+          value={props.value}
+          className={props.classInput}
+          onChange={props.onChange}
+          onBlur={props.onBlur}
+        />
+        {props.error && <small>{props.error}</small>}
+      </>
     </div>
   );
 }
 
 Input.propTypes = {
   onChange: propTypes.func,
+  onBlur: propTypes.func,
   classForm: propTypes.string,
   classInput: propTypes.string,
   name: propTypes.string,
+  id: propTypes.string,
   label: propTypes.string,
   type: propTypes.string,
   placeholder: propTypes.string,
-  small: propTypes.string,
-  list: propTypes.array,
   max: propTypes.number,
   value: propTypes.string,
   pattern: propTypes.string,
   isRow: propTypes.bool,
   isSingle: propTypes.bool,
   isTodo: propTypes.bool,
+  error: propTypes.string,
 };

@@ -70,11 +70,14 @@
     padding: 12px;
     width: 100%;
     margin-bottom: 16px;
-    opacity: 0.6;
     transition: 0.5s;
     &:hover {
-      opacity: 1;
+      opacity: 0.6;
     }
+  }
+  .btn-disabled {
+    opacity: 0.6;
+    cursor: no-drop;
   }
   p {
     @include typography(14px, 16px, $textFourthlyColor);

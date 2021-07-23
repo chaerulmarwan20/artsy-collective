@@ -15,6 +15,7 @@ export default function Button(props) {
       type={props.type}
       className={className.join(" ")}
       onClick={props.onClick}
+      disabled={props.isDisabled}
     >
       {props.children}
     </button>
@@ -28,4 +29,5 @@ Button.propTypes = {
   isPrimary: propTypes.bool,
   isOutline: propTypes.bool,
   isSmall: propTypes.bool,
+  isDisabled: propTypes.bool,
 };
