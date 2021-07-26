@@ -1,0 +1,35 @@
+@import "../../assets/scss/variables/color";
+
+.rc-slider {
+  &-rail {
+    background-color: $borderPrimaryColor;
+  }
+  &-track {
+    background-color: $primaryColor;
+  }
+  &-handle {
+    border: none;
+    background-color: $primaryColor;
+    &-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
+      border-color: $primaryColor;
+      box-shadow: 0 0 0 5px rgba($primaryColor, 0.5);
+    }
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      border-color: $primaryColor;
+    }
+    &:active {
+      border-color: $primaryColor;
+      box-shadow: 0 0 5px $primaryColor;
+    }
+    &-click-focused:focus {
+      border-color: $primaryColor;
+      box-shadow: unset;
+    }
+  }
+  &-dot-active {
+    border-color: $primaryColor;
+  }
+}

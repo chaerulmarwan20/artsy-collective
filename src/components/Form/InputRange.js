@@ -1,38 +1,14 @@
 import React, { useState } from "react";
+import { Range } from "rc-slider";
 import propTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Slider from "@material-ui/core/Slider";
+
+import "rc-slider/assets/index.css";
+import "./range.scss";
 
 import Rupiah from "../../utils/Rupiah";
 
-const RangeSlider = withStyles({
-  root: {
-    color: "#CA8F48",
-    margin: 0,
-    padding: 0,
-  },
-  thumb: {
-    height: 16,
-    width: 16,
-    backgroundColor: "#CA8F48",
-    marginTop: -7,
-  },
-  track: {
-    height: 4,
-    borderRadius: 2,
-  },
-  rail: {
-    height: 4,
-    borderRadius: 2,
-  },
-})(Slider);
-
 export default function InputRange(props) {
   const [value, setValue] = useState([0, 13479000]);
-
-  const handleChange = (e, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <>
@@ -45,11 +21,11 @@ export default function InputRange(props) {
         </span>
       </div>
       <div className="range-price">
-        <RangeSlider
+        <Range
           min={0}
           max={13479000}
           value={value}
-          onChange={handleChange}
+          onChange={(newValue) => setValue(newValue)}
         />
         <p className="title-range">{props.value}</p>
       </div>
