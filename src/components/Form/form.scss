@@ -118,7 +118,17 @@
         padding-right: 12px;
       }
     }
+    &.date-picker {
+      padding-left: 60px;
+      // background: url(../../assets/img/calendar.png) no-repeat;
+      // background-size: 16px;
+      // background-position-y: center;
+      // background-position-x: 14px;
+    }
   }
+}
+.react-datepicker-wrapper {
+  width: 100%;
 }
 small {
   display: block;
@@ -219,6 +229,21 @@ small {
 }
 .input-date {
   position: relative;
+  width: 100%;
+  .calendar {
+    position: absolute;
+    display: flex;
+    top: 10px;
+    left: 14px;
+    border-right: 1px solid $borderPrimaryColor;
+    padding-right: 15px;
+    height: 24px;
+    img {
+      display: block;
+      width: 16px;
+      cursor: pointer;
+    }
+  }
 }
 .input-password {
   position: relative;
