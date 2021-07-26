@@ -47,6 +47,7 @@ export default function Pagination({
 
   useEffect(() => {
     getPageNumber();
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -100,6 +100,7 @@ export default function ProductList() {
   useEffect(() => {
     document.title = "Artsy Collective | Product List";
     fetchPokemon();
+    // eslint-disable-next-line
   }, [offset]);
 
   useEffect(() => {

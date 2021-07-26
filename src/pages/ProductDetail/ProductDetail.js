@@ -123,6 +123,7 @@ export default function ProductDetail() {
     scroll.scrollToTop();
     handleWindow();
     fetchPokemonDetail();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

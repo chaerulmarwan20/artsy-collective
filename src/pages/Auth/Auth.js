@@ -90,28 +90,29 @@ export default function Auth() {
     acceptTerms: Yup.bool().oneOf([true]),
   });
 
-  const formik = useFormik({
-    initialValues: type === "signin" ? signInValues : signUpValues,
-    validationSchema: type === "signin" ? signInSchema : signUpSchema,
+  const formikSignIn = useFormik({
+    initialValues: signInValues,
+    validationSchema: signInSchema,
     onSubmit: (values) => {
       for (const v in values) {
         if (typeof values[v] === "string") values[v] = values[v].trim();
       }
       alert(JSON.stringify(values, null, 2));
-      formik.resetForm();
+      formikSignIn.resetForm();
     },
   });
 
-  const {
-    errors,
-    touched,
-    dirty,
-    isValid,
-    values,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-  } = formik;
+  const formikSignUp = useFormik({
+    initialValues: signUpValues,
+    validationSchema: signUpSchema,
+    onSubmit: (values) => {
+      for (const v in values) {
+        if (typeof values[v] === "string") values[v] = values[v].trim();
+      }
+      alert(JSON.stringify(values, null, 2));
+      formikSignUp.resetForm();
+    },
+  });
 
   useEffect(() => {
     document.body.classList.add("overflow-modal");
@@ -131,30 +132,44 @@ export default function Auth() {
           </div>
           <div className="login-body">
             <p>Sign in with your email and password.</p>
-            <form className="form-wrapper" onSubmit={handleSubmit}>
+            <form className="form-wrapper" onSubmit={formikSignIn.handleSubmit}>
               <Input
                 name="email"
                 label="Email / Username"
                 type="text"
                 placeholder="ex: johndoe@email.com"
-                classInput={`${errors.email && touched.email && "error"}`}
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={errors.email && touched.email && errors.email}
+                classInput={`${
+                  formikSignIn.errors.email &&
+                  formikSignIn.touched.email &&
+                  "error"
+                }`}
+                value={formikSignIn.values.email}
+                onChange={formikSignIn.handleChange}
+                onBlur={formikSignIn.handleBlur}
+                error={
+                  formikSignIn.errors.email &&
+                  formikSignIn.touched.email &&
+                  formikSignIn.errors.email
+                }
               />
               <InputPassword
                 name="password"
                 label="Password"
                 placeholder="ex: *****"
                 classInput={`password-login ${
-                  errors.password && touched.password && "error"
+                  formikSignIn.errors.password &&
+                  formikSignIn.touched.password &&
+                  "error"
                 }`}
                 classButton="btn-eye-login hover-opacity-primary"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={errors.password && touched.password && errors.password}
+                value={formikSignIn.values.password}
+                onChange={formikSignIn.handleChange}
+                onBlur={formikSignIn.handleBlur}
+                error={
+                  formikSignIn.errors.password &&
+                  formikSignIn.touched.password &&
+                  formikSignIn.errors.password
+                }
                 onClick={() => handleTypePassword("loginPass")}
               />
               <Link
@@ -168,9 +183,13 @@ export default function Auth() {
                 <Button
                   type="submit"
                   className={`btn-auth ${
-                    !dirty || !isValid ? "btn-disabled" : ""
+                    !formikSignIn.dirty || !formikSignIn.isValid
+                      ? "btn-disabled"
+                      : ""
                   }`}
-                  isDisabled={!dirty || !isValid ? true : false}
+                  isDisabled={
+                    !formikSignIn.dirty || !formikSignIn.isValid ? true : false
+                  }
                   isPrimary
                 >
                   Login
@@ -181,7 +200,7 @@ export default function Auth() {
                     to="/account/signup"
                     className="font-semi-bold hover-color-tertiary"
                     title="Sign Up"
-                    onClick={() => formik.resetForm()}
+                    onClick={() => formikSignIn.resetForm()}
                   >
                     Sign Up
                   </Link>
@@ -202,7 +221,7 @@ export default function Auth() {
             <p>Save your information to check out faster</p>
             <form
               className="form-wrapper form-register"
-              onSubmit={handleSubmit}
+              onSubmit={formikSignUp.handleSubmit}
             >
               <div className="form-group form-row">
                 <Input
@@ -211,13 +230,17 @@ export default function Auth() {
                   type="text"
                   placeholder="ex: john"
                   classInput={`${
-                    errors.firstName && touched.firstName && "error"
+                    formikSignUp.errors.firstName &&
+                    formikSignUp.touched.firstName &&
+                    "error"
                   }`}
-                  value={values.firstName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+                  value={formikSignUp.values.firstName}
+                  onChange={formikSignUp.handleChange}
+                  onBlur={formikSignUp.handleBlur}
                   error={
-                    errors.firstName && touched.firstName && errors.firstName
+                    formikSignUp.errors.firstName &&
+                    formikSignUp.touched.firstName &&
+                    formikSignUp.errors.firstName
                   }
                   isRow
                 />
@@ -227,12 +250,18 @@ export default function Auth() {
                   type="text"
                   placeholder="ex: doe"
                   classInput={`${
-                    errors.lastName && touched.lastName && "error"
+                    formikSignUp.errors.lastName &&
+                    formikSignUp.touched.lastName &&
+                    "error"
                   }`}
-                  value={values.lastName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={errors.lastName && touched.lastName && errors.lastName}
+                  value={formikSignUp.values.lastName}
+                  onChange={formikSignUp.handleChange}
+                  onBlur={formikSignUp.handleBlur}
+                  error={
+                    formikSignUp.errors.lastName &&
+                    formikSignUp.touched.lastName &&
+                    formikSignUp.errors.lastName
+                  }
                   isRow
                 />
               </div>
@@ -242,11 +271,19 @@ export default function Auth() {
                 label="Email / Username"
                 type="text"
                 placeholder="ex: johndoe@email.com"
-                classInput={`${errors.email && touched.email && "error"}`}
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={errors.email && touched.email && errors.email}
+                classInput={`${
+                  formikSignUp.errors.email &&
+                  formikSignUp.touched.email &&
+                  "error"
+                }`}
+                value={formikSignUp.values.email}
+                onChange={formikSignUp.handleChange}
+                onBlur={formikSignUp.handleBlur}
+                error={
+                  formikSignUp.errors.email &&
+                  formikSignUp.touched.email &&
+                  formikSignUp.errors.email
+                }
               />
               <Input
                 name="contactNumber"
@@ -254,25 +291,35 @@ export default function Auth() {
                 type="text"
                 placeholder="ex: +62812 3456 7890"
                 classInput={`${
-                  errors.contactNumber && touched.contactNumber && "error"
+                  formikSignUp.errors.contactNumber &&
+                  formikSignUp.touched.contactNumber &&
+                  "error"
                 }`}
-                value={values.contactNumber}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                value={formikSignUp.values.contactNumber}
+                onChange={formikSignUp.handleChange}
+                onBlur={formikSignUp.handleBlur}
                 error={
-                  errors.contactNumber &&
-                  touched.contactNumber &&
-                  errors.contactNumber
+                  formikSignUp.errors.contactNumber &&
+                  formikSignUp.touched.contactNumber &&
+                  formikSignUp.errors.contactNumber
                 }
               />
               <InputDate
                 name="birthday"
                 label="Date of Birth"
-                classInput={`${errors.birthday && touched.birthday && "error"}`}
-                value={values.birthday}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={errors.birthday && touched.birthday && errors.birthday}
+                classInput={`${
+                  formikSignUp.errors.birthday &&
+                  formikSignUp.touched.birthday &&
+                  "error"
+                }`}
+                value={formikSignUp.values.birthday}
+                onChange={formikSignUp.handleChange}
+                onBlur={formikSignUp.handleBlur}
+                error={
+                  formikSignUp.errors.birthday &&
+                  formikSignUp.touched.birthday &&
+                  formikSignUp.errors.birthday
+                }
               />
               <div className="form-group form-radio">
                 <InputRadio
@@ -281,11 +328,13 @@ export default function Auth() {
                   id="female"
                   label="Female"
                   classLabel={`radio-label ${
-                    errors.gender && touched.gender && "error"
+                    formikSignUp.errors.gender &&
+                    formikSignUp.touched.gender &&
+                    "error"
                   }`}
                   value="female"
-                  onChange={handleChange}
-                  isChecked={values.gender === "female"}
+                  onChange={formikSignUp.handleChange}
+                  isChecked={formikSignUp.values.gender === "female"}
                   isSingle
                 />
                 <InputRadio
@@ -294,11 +343,13 @@ export default function Auth() {
                   id="male"
                   label="Male"
                   classLabel={`radio-label ${
-                    errors.gender && touched.gender && "error"
+                    formikSignUp.errors.gender &&
+                    formikSignUp.touched.gender &&
+                    "error"
                   }`}
                   value="male"
-                  onChange={handleChange}
-                  isChecked={values.gender === "male"}
+                  onChange={formikSignUp.handleChange}
+                  isChecked={formikSignUp.values.gender === "male"}
                   isSingle
                 />
               </div>
@@ -308,13 +359,19 @@ export default function Auth() {
                 label="Password"
                 placeholder="ex: *****"
                 classInput={`password-register ${
-                  errors.password && touched.password && "error"
+                  formikSignUp.errors.password &&
+                  formikSignUp.touched.password &&
+                  "error"
                 }`}
                 classButton="btn-eye-register-one hover-opacity-primary"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={errors.password && touched.password && errors.password}
+                value={formikSignUp.values.password}
+                onChange={formikSignUp.handleChange}
+                onBlur={formikSignUp.handleBlur}
+                error={
+                  formikSignUp.errors.password &&
+                  formikSignUp.touched.password &&
+                  formikSignUp.errors.password
+                }
                 onClick={() => handleTypePassword("registerPass")}
               />
               <InputPassword
@@ -322,16 +379,18 @@ export default function Auth() {
                 label="Confirm Password"
                 placeholder="ex: *****"
                 classInput={`confirm-password-register ${
-                  errors.confirmPassword && touched.confirmPassword && "error"
+                  formikSignUp.errors.confirmPassword &&
+                  formikSignUp.touched.confirmPassword &&
+                  "error"
                 }`}
                 classButton="btn-eye-register-two hover-opacity-primary"
-                value={values.confirmPassword}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                value={formikSignUp.values.confirmPassword}
+                onChange={formikSignUp.handleChange}
+                onBlur={formikSignUp.handleBlur}
                 error={
-                  errors.confirmPassword &&
-                  touched.confirmPassword &&
-                  errors.confirmPassword
+                  formikSignUp.errors.confirmPassword &&
+                  formikSignUp.touched.confirmPassword &&
+                  formikSignUp.errors.confirmPassword
                 }
                 onClick={() => handleTypePassword("registerConfirm")}
               />
@@ -342,8 +401,8 @@ export default function Auth() {
                   name="subscription"
                   classDesc="arrival-label"
                   label="Send me Artsy Collective new arrival updates, offers, and more."
-                  onChange={handleChange}
-                  isChecked={values.subscription}
+                  onChange={formikSignUp.handleChange}
+                  isChecked={formikSignUp.values.subscription}
                   isAuth
                 />
                 <InputCheckbox
@@ -352,8 +411,8 @@ export default function Auth() {
                   name="acceptTerms"
                   classDesc="terms-label"
                   label="I agree to Artsy Collective <a href='#' class='hover-color-primary'title='Terms & Conditions'>Terms & Conditions </a> and <a href='#' class='hover-color-primary' title='Privacy Policy'>Privacy Policy.</a>"
-                  onChange={handleChange}
-                  isChecked={values.acceptTerms}
+                  onChange={formikSignUp.handleChange}
+                  isChecked={formikSignUp.values.acceptTerms}
                   isAuth
                 />
               </div>
@@ -361,9 +420,13 @@ export default function Auth() {
                 <Button
                   type="submit"
                   className={`btn-auth ${
-                    !dirty || !isValid ? "btn-disabled" : ""
+                    !formikSignUp.dirty || !formikSignUp.isValid
+                      ? "btn-disabled"
+                      : ""
                   }`}
-                  isDisabled={!dirty || !isValid ? true : false}
+                  isDisabled={
+                    !formikSignUp.dirty || !formikSignUp.isValid ? true : false
+                  }
                   isPrimary
                 >
                   Create Account
@@ -374,7 +437,7 @@ export default function Auth() {
                     to="/account/signin"
                     className="font-semi-bold hover-color-tertiary"
                     title="Sign In"
-                    onClick={() => formik.resetForm()}
+                    onClick={() => formikSignUp.resetForm()}
                   >
                     Sign In
                   </Link>
